@@ -55,7 +55,24 @@ const LinkItems: Array<NavItems> = [
       },
     ],
   },
-  { label: "Reportes", url: "/repostes", icon: Reportes },
+  {
+    label: "Reportes",
+    icon: Reportes,
+    children: [
+      {
+        label: "Reporte de ingreso",
+        href: "/reporte-ingreso",
+      },
+      {
+        label: "Reporte de egreso",
+        href: "/reporte-egreso",
+      },
+      {
+        label: "Reporte general",
+        href: "/reporte-general",
+      },
+    ],
+  },
   { label: "Aportacion", url: "/aportacion", icon: General },
   { label: "Benefactores", url: "/benefactores", icon: General },
   { label: "Usuario", url: "/usuarios", icon: General },
