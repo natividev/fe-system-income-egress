@@ -23,13 +23,13 @@ export const NavItem = ({ icon, url, label, children }: NavItems) => {
           p={4}
           mx={3}
           as="div" // Cambiado de "p" a "div" por semántica correcta
-          bg="red.100"
+          bg="rgba(36, 34, 32, 0.04)"
           color="#242220"
           borderRadius="lg"
           justifyContent="space-between"
           alignItems="center"
           _hover={{
-            bg: "red.200",
+            bg: "rgba(36, 34, 32, 0.08)",
           }}
         >
           <Flex align="center">
@@ -56,7 +56,7 @@ export const NavItem = ({ icon, url, label, children }: NavItems) => {
             {children.map((child) => (
               <Link key={child.label} href={child.href ?? "#"} passHref>
                 <Box
-                  as="div" // Cambiado de "p" a "div"
+                  as="div"
                   p={2}
                   mx={2}
                   w="auto"
@@ -64,7 +64,7 @@ export const NavItem = ({ icon, url, label, children }: NavItems) => {
                   color="#2422208F"
                   cursor="pointer"
                   _hover={{
-                    bg: "red.200",
+                    bg: "rgba(36, 34, 32, 0.08)",
                     color: "#242220",
                   }}
                 >
