@@ -9,9 +9,16 @@ import { useForm } from "react-hook-form";
 interface Props {
   onSubmit: (data: FormInputs) => Promise<resultApi>;
   isLoadig: boolean;
+  title: string;
+  isIngreso: boolean;
 }
 
-export default function RegisterFormControl({ onSubmit, isLoadig }: Props) {
+export default function RegisterFormControl({
+  onSubmit,
+  isLoadig,
+  title,
+  isIngreso,
+}: Props) {
   const { control, handleSubmit, reset } = useForm<FormInputs>({
     defaultValues: {
       razon: "",
@@ -44,7 +51,7 @@ export default function RegisterFormControl({ onSubmit, isLoadig }: Props) {
       display={"block"}
     >
       <Text fontSize="4xl" mb={10} as="b">
-        Crear Ingreso
+        {title}
       </Text>
       <SimpleGrid columns={{ sm: 1, md: 5, lg: 5 }} spacing={4} mb={5}>
         <GridItem colSpan={{ sm: 1, md: 5, lg: 3 }}>
@@ -158,22 +165,24 @@ export default function RegisterFormControl({ onSubmit, isLoadig }: Props) {
             />
           </FormControl>
         </GridItem>
-        <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
-          <FormControl id="firstName" isRequired>
-            <SelectController
-              key={"ingreso"}
-              label={"Tipo Ingreso:"}
-              endpoint={"tipo-ingreso"}
-              disabledInput={isLoadig}
-              name="tipoIngreso"
-              placeholder=""
-              control={control}
-              rules={{
-                required: "Por favor ingrese el no tipo ingreso",
-              }}
-            />
-          </FormControl>
-        </GridItem>
+        {isIngreso && (
+          <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
+            <FormControl id="firstName" isRequired>
+              <SelectController
+                key={"ingreso"}
+                label={"Tipo Ingreso:"}
+                endpoint={"tipo-ingreso"}
+                disabledInput={isLoadig}
+                name="tipoIngreso"
+                placeholder=""
+                control={control}
+                rules={{
+                  required: "Por favor ingrese el no tipo ingreso",
+                }}
+              />
+            </FormControl>
+          </GridItem>
+        )}
         <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
           <FormControl id="firstName" isRequired>
             <SelectController
@@ -194,7 +203,7 @@ export default function RegisterFormControl({ onSubmit, isLoadig }: Props) {
           <FormControl id="firstName" isRequired>
             <SelectController
               key={"aprotacion"}
-              label={"Tipo Aprotacion:"}
+              label={"Tipo Aportacion:"}
               endpoint={"tipo-aportacion"}
               disabledInput={isLoadig}
               name="tipoAportacion"

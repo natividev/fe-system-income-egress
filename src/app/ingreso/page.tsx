@@ -34,5 +34,12 @@ export default function IngresoPage() {
     return result;
   };
 
-  return <RegisterFormControl onSubmit={onSubmit} isLoadig={isLoadig} />;
+  return (
+    <RegisterFormControl
+      onSubmit={onSubmit}
+      isLoadig={isLoadig}
+      title="Crear Ingreso"
+      isIngreso={true}
+    />
+  );
 }
