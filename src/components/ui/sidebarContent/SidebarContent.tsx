@@ -75,7 +75,7 @@ const LinkItems: Array<NavItems> = [
   },
   { label: "Aportacion", url: "/aportacion", icon: General },
   { label: "Benefactores", url: "/benefactores", icon: General },
-  { label: "Usuario", url: "/usuarios", icon: General },
+  { label: "Afiliados", url: "/afiliados", icon: General },
 ];
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {

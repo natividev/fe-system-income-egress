@@ -31,6 +31,7 @@ export default function EgresoPage() {
     setIsLoading(false);
     return result;
   };
+
   return (
     <RegisterFormControl
       onSubmit={onSubmit}

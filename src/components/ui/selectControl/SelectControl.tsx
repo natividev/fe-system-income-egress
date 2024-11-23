@@ -11,9 +11,10 @@ import {
 import AsyncSelect from "react-select/async";
 import axiosInstance from "@/api/axiosInstance";
 
-interface resultItems {
+interface items {
   id: number;
-  nombre: string;
+  descripcion?: string;
+  nombre?: string;
 }
 
 export const SelectController = <T extends FieldValues>({
@@ -29,17 +30,22 @@ export const SelectController = <T extends FieldValues>({
   const [options, setOptions] = useState([]);
 
   const getData = async () => {
-    setIsLoading(true);
-    const { data } = await axiosInstance.get(endpoint);
+    try {
+      setIsLoading(true);
+      const { data } = await axiosInstance.get(endpoint);
 
-    if (data) {
-      setOptions(
-        data.map((element: resultItems) => ({
-          label: element.nombre,
-          value: element.id,
-        }))
-      );
-      setIsLoading(false);
+      if (data) {
+        const option = data.map((element: items) => {
+          return {
+            label: element?.nombre || element?.descripcion,
+            value: element.id,
+          };
+        });
+        setOptions(option);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

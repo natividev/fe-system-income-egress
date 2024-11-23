@@ -66,6 +66,17 @@ export interface FormInputs {
   observaciones: string;
 }
 
+export interface FormInputsAfiliados {
+  nombre: string;
+  tipoAfiliado: LabelValue | null;
+  tipoDocumento: LabelValue | null;
+  numDocumento: string;
+  fecha: string;
+  correo: string;
+  telefono: string;
+  observaciones: string;
+}
+
 export interface resultApi {
   message: string;
 }
