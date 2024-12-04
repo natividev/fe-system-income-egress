@@ -38,24 +38,6 @@ const LinkItems: Array<NavItems> = [
     ],
   },
   {
-    label: "Egreso",
-    icon: Dashboard,
-    children: [
-      {
-        label: "Pago o servicio",
-        href: "/servicio",
-      },
-      {
-        label: "Pago o contrato",
-        href: "/contrato",
-      },
-      {
-        label: "Compras o gasto varios",
-        href: "/gastos-varios",
-      },
-    ],
-  },
-  {
     label: "Reportes",
     icon: Reportes,
     children: [
@@ -73,8 +55,6 @@ const LinkItems: Array<NavItems> = [
       },
     ],
   },
-  { label: "Aportacion", url: "/aportacion", icon: General },
-  { label: "Benefactores", url: "/benefactores", icon: General },
   { label: "Afiliados", url: "/afiliados", icon: General },
 ];
 

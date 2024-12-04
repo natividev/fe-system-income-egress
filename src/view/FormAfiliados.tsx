@@ -15,18 +15,19 @@ interface Props {
 }
 
 export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
-  const { control, handleSubmit, reset } = useForm<FormInputsAfiliados>({
-    defaultValues: {
-      nombre: "",
-      tipoDocumento: null,
-      numDocumento: "",
-      fecha: "",
-      tipoAfiliado: null,
-      correo: "",
-      telefono: "",
-      observaciones: "",
-    },
-  });
+  const { control, handleSubmit, reset, setValue, watch } =
+    useForm<FormInputsAfiliados>({
+      defaultValues: {
+        nombre: "",
+        tipoDocumento: null,
+        numDocumento: "",
+        fecha: "",
+        tipoAfiliado: null,
+        correo: "",
+        telefono: "",
+        observaciones: "",
+      },
+    });
 
   const onSubmitWithReset = async (data: FormInputsAfiliados) => {
     const result = await onSubmit(data);
@@ -71,6 +72,8 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
               name="tipoAfiliado"
               placeholder=""
               control={control}
+              setValue={setValue}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese el tipo documento",
               }}
@@ -86,6 +89,8 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
               name="tipoDocumento"
               placeholder=""
               control={control}
+              setValue={setValue}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese el tipo documento",
               }}

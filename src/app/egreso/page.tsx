@@ -12,7 +12,7 @@ export default function EgresoPage() {
       nombreActividad: data.actividadEconomica,
       fechaActividad: data.fechaActividad,
       cantidad: data.cantidad,
-      razon: data.razon,
+      idAfiliado: data.afiliado?.value,
       dui: data.numDocumento,
       noTransaccion: data.transaccion,
       observaciones: data.observaciones,

@@ -13,6 +13,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config: CustomAxiosRequestConfig) => {
+    config.showSuccess = true;
+    config.showAlerts = true;
     return config;
   },
   (error) => {
@@ -23,8 +25,9 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => {
     const config = response.config as CustomAxiosRequestConfig;
+    const isSuccess = response.data?.message || response.data?.messages;
 
-    if (config?.showSuccess) {
+    if (config?.showSuccess && isSuccess) {
       const messageSuccess =
         response.data?.message || response.data?.messages || "Exito";
 

@@ -4,6 +4,7 @@ import { SelectController } from "@/components/ui/selectControl/SelectControl";
 import { TextAreaController } from "@/components/ui/textareaControl/TextareaControl";
 import { FormInputs, resultApi } from "@/interface/interfaces";
 import { Box, FormControl, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -19,27 +20,35 @@ export default function RegisterFormControl({
   title,
   isIngreso,
 }: Props) {
-  const { control, handleSubmit, reset } = useForm<FormInputs>({
-    defaultValues: {
-      razon: "",
-      tipoDocumento: null,
-      numDocumento: "",
-      actividadEconomica: "",
-      telefono: "",
-      fechaActividad: "",
-      transaccion: "",
-      tipoIngreso: null,
-      tipoControl: null,
-      tipoAportacion: null,
-      cantidad: "",
-      observaciones: "",
-    },
-  });
+  const { control, handleSubmit, reset, watch, setValue } = useForm<FormInputs>(
+    {
+      defaultValues: {
+        tipoAfiliado: null,
+        afiliado: null,
+        tipoDocumento: null,
+        actividadEconomica: "",
+        telefono: "",
+        fechaActividad: "",
+        transaccion: "",
+        tipoIngreso: null,
+        tipoControl: null,
+        tipoAportacion: null,
+        cantidad: "",
+        observaciones: "",
+      },
+    }
+  );
 
+  const [afilidoId, setAfiliadoId] = useState(2);
   const onSubmitWithReset = async (data: FormInputs) => {
     const result = await onSubmit(data);
     if (result) reset();
   };
+
+  useEffect(() => {
+    const afil = watch("tipoAfiliado");
+    setAfiliadoId(afil?.value ?? 1);
+  }, [watch("tipoAfiliado")]); //eslint-disable-line
 
   return (
     <Box
@@ -53,29 +62,16 @@ export default function RegisterFormControl({
       <Text fontSize="4xl" mb={10} as="b">
         {title}
       </Text>
-      <SimpleGrid columns={{ sm: 1, md: 5, lg: 5 }} spacing={4} mb={5}>
-        <GridItem colSpan={{ sm: 1, md: 5, lg: 3 }}>
-          <FormControl id="razon" isRequired>
-            <InputController
-              label={"Razon:"}
-              disabledInput={isLoadig}
-              name={"razon"}
-              type="text"
-              placeholder=""
-              control={control}
-              rules={{
-                required: "Por favor ingrese la razon",
-              }}
-            />
-          </FormControl>
-        </GridItem>
-        <GridItem colSpan={{ sm: 1, md: 2, lg: 1 }}>
-          <FormControl id="firstName" isRequired>
+      <SimpleGrid columns={{ sm: 1, md: 6, lg: 6 }} spacing={4} mb={5}>
+        <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
+          <FormControl id="tipoAfiliado" isRequired>
             <SelectController
-              label={"Tipo Documento:"}
-              endpoint={"generales/tipo-documento"}
+              label={"Tipo Afiliado:"}
+              endpoint={"afiliados"}
               disabledInput={isLoadig}
-              name="tipoDocumento"
+              name="tipoAfiliado"
+              setValue={setValue}
+              watch={watch}
               placeholder=""
               control={control}
               rules={{
@@ -84,17 +80,20 @@ export default function RegisterFormControl({
             />
           </FormControl>
         </GridItem>
-        <GridItem colSpan={{ sm: 1, md: 3, lg: 1 }}>
-          <FormControl id="firstName" isRequired>
-            <InputController
-              label={"Número Documento:"}
+        <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
+          <FormControl id="tipoAfiliado" isRequired>
+            <SelectController
+              label={"Afiliado:"}
+              endpoint={`/afiliados/tipo-afiliados/${afilidoId}`}
               disabledInput={isLoadig}
-              name="numDocumento"
-              type="number"
+              name="afiliado"
+              setValue={setValue}
+              watch={watch}
               placeholder=""
               control={control}
+              isDefaultValue={false}
               rules={{
-                required: "Por favor ingrese el número de documento",
+                required: "Por favor ingrese el tipo documento",
               }}
             />
           </FormControl>
@@ -175,6 +174,8 @@ export default function RegisterFormControl({
                 disabledInput={isLoadig}
                 name="tipoIngreso"
                 placeholder=""
+                setValue={setValue}
+                watch={watch}
                 control={control}
                 rules={{
                   required: "Por favor ingrese el no tipo ingreso",
@@ -193,6 +194,8 @@ export default function RegisterFormControl({
               name="tipoControl"
               placeholder=""
               control={control}
+              setValue={setValue}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese el tipo control",
               }}
@@ -209,6 +212,8 @@ export default function RegisterFormControl({
               name="tipoAportacion"
               placeholder=""
               control={control}
+              setValue={setValue}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese el tipo de aprotacion",
               }}

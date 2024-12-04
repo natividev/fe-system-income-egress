@@ -1,5 +1,8 @@
 "use client";
 import axiosInstance from "@/api/axiosInstance";
+import BtnLoading from "@/components/ui/btnLoading/BtnLoading";
+import { InputController } from "@/components/ui/inputControl/InputControl";
+import { FormInputsInforme } from "@/interface/interfaces";
 import {
   showAlertError,
   showAlertLoading,
@@ -8,6 +11,8 @@ import {
 import {
   Button,
   Flex,
+  FormControl,
+  GridItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -15,9 +20,12 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  SimpleGrid,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface Props {
   endpoint: string;
@@ -25,14 +33,24 @@ interface Props {
   btnTitle: string;
 }
 export default function GenerarInformes({ endpoint, title, btnTitle }: Props) {
+  const [isLoadig, setIsLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [urlPdf, setUrlPdf] = useState("");
 
+  const { control, handleSubmit, reset, watch } = useForm<FormInputsInforme>({
+    defaultValues: {
+      desde: "",
+      hasta: "",
+    },
+  });
+
   const printReceipt = async () => {
     const textAlert = "Generando el comprobante, por favor espera";
+    setIsLoading(true);
     showAlertLoading(textAlert, true);
     try {
-      const { data } = await axiosInstance.get(endpoint, {
+      const param = `desde=${watch("desde")}&hasta=${watch("hasta")}`;
+      const { data } = await axiosInstance.get(`${endpoint}?${param}`, {
         responseType: "arraybuffer",
       });
       if (data) {
@@ -42,6 +60,7 @@ export default function GenerarInformes({ endpoint, title, btnTitle }: Props) {
         setUrlPdf(urlBlob);
         onOpen();
         showAlertSuccess("Comprobante generado exitosamente", false);
+        reset();
       }
     } catch (error) {
       showAlertError(
@@ -49,8 +68,11 @@ export default function GenerarInformes({ endpoint, title, btnTitle }: Props) {
       );
     } finally {
       showAlertLoading(textAlert, false);
+      setIsLoading(false);
+      reset();
     }
   };
+
   return (
     <Flex
       p={5}
@@ -60,9 +82,51 @@ export default function GenerarInformes({ endpoint, title, btnTitle }: Props) {
       borderRadius="lg"
       display={"block"}
     >
-      <Button colorScheme="teal" size="lg" onClick={printReceipt}>
-        GENERAR INFORME {btnTitle}
-      </Button>
+      <Text fontSize="4xl" as="b">
+        INFORME {btnTitle}
+      </Text>
+      <SimpleGrid columns={{ sm: 1, md: 12, lg: 12 }} spacing={4} mb={5}>
+        <GridItem colSpan={{ sm: 1, md: 4, lg: 4 }}>
+          <FormControl id="firstName" isRequired>
+            <InputController
+              label={"Nombre de la actividad:"}
+              disabledInput={isLoadig}
+              name="desde"
+              type="date"
+              placeholder=""
+              control={control}
+              rules={{
+                required: "Por favor ingrese la fecha de inicio",
+              }}
+            />
+          </FormControl>
+        </GridItem>
+        <GridItem colSpan={{ sm: 1, md: 4, lg: 4 }}>
+          <FormControl id="firstName" isRequired>
+            <InputController
+              label={"Nombre de la actividad:"}
+              disabledInput={isLoadig}
+              name="hasta"
+              type="date"
+              placeholder=""
+              control={control}
+              rules={{
+                required: "Por favor la fecha final",
+              }}
+            />
+          </FormControl>
+        </GridItem>
+        <GridItem colSpan={{ sm: 1, md: 4, lg: 4 }} alignContent={"end"}>
+          <BtnLoading
+            isLoading={isLoadig}
+            onSubmit={handleSubmit(printReceipt)}
+            text={"GENERAR INFORME"}
+            textLoading={"GENERANDO INFORME..."}
+            w={"100%"}
+          />
+        </GridItem>
+      </SimpleGrid>
+
       <Modal
         isCentered
         onClose={() => {

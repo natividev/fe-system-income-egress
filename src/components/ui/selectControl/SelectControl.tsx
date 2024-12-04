@@ -15,14 +15,18 @@ interface items {
   id: number;
   descripcion?: string;
   nombre?: string;
+  razon_social?: string;
 }
 
 export const SelectController = <T extends FieldValues>({
   label,
   name,
+  setValue,
+  watch,
   control,
   rules,
   placeholder,
+  isDefaultValue = true,
   disabledInput = false,
   endpoint,
 }: SelectControllerProps<T>) => {
@@ -37,10 +41,12 @@ export const SelectController = <T extends FieldValues>({
       if (data) {
         const option = data.map((element: items) => {
           return {
-            label: element?.nombre || element?.descripcion,
+            label:
+              element?.nombre || element?.descripcion || element?.razon_social,
             value: element.id,
           };
         });
+        if (isDefaultValue) setValue(name, option[0]);
         setOptions(option);
         setIsLoading(false);
       }
@@ -51,7 +57,7 @@ export const SelectController = <T extends FieldValues>({
 
   useEffect(() => {
     getData();
-  }, []); //eslint-disable-line
+  }, [endpoint]); //eslint-disable-line
 
   return (
     <Controller
@@ -73,6 +79,7 @@ export const SelectController = <T extends FieldValues>({
               isDisabled={disabledInput}
               placeholder={placeholder}
               defaultOptions={options}
+              value={watch(name)}
               isLoading={isLoading}
               styles={{
                 container: (base) => ({

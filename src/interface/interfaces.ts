@@ -1,6 +1,12 @@
 import { ReactNode } from "react";
 import { IconProps } from "@chakra-ui/react";
-import { Control, FieldValues, Path } from "react-hook-form";
+import {
+  Control,
+  FieldValues,
+  Path,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 import { InternalAxiosRequestConfig } from "axios";
 
 export interface InputControllerProps<T extends FieldValues> {
@@ -27,10 +33,13 @@ export interface SelectControllerProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
   control: Control<T>;
+  setValue: UseFormSetValue<T>;
+  watch: UseFormWatch<T>;
   rules: object;
   placeholder: string;
   disabledInput: boolean;
   endpoint: string;
+  isDefaultValue?: boolean;
 }
 
 interface NavItem {
@@ -52,7 +61,8 @@ interface LabelValue {
 }
 
 export interface FormInputs {
-  razon: string;
+  tipoAfiliado: LabelValue | null;
+  afiliado: LabelValue | null;
   tipoDocumento: LabelValue | null;
   numDocumento: string;
   actividadEconomica: string;
@@ -64,6 +74,11 @@ export interface FormInputs {
   tipoAportacion?: LabelValue | null;
   cantidad: string;
   observaciones: string;
+}
+
+export interface FormInputsInforme {
+  desde: "";
+  hasta: "";
 }
 
 export interface FormInputsAfiliados {
