@@ -67,7 +67,7 @@ const SidebarWithHeader = ({ children }: PropsSideBar) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
+      <Box ml={{ base: 0, md: 60 }} p="4" h="auto">
         {children}
       </Box>
     </Box>
