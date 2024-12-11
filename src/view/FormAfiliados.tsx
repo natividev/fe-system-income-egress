@@ -167,7 +167,7 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
               placeholder=""
               control={control}
               rules={{
-                required: "Por favor ingrese la observaciones",
+                required: false,
               }}
             />
           </FormControl>

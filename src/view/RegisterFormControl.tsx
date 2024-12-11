@@ -249,7 +249,7 @@ export default function RegisterFormControl({
               placeholder=""
               control={control}
               rules={{
-                required: "Por favor ingrese la observaciones",
+                required: false,
               }}
             />
           </FormControl>
