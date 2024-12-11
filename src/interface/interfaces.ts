@@ -111,3 +111,12 @@ export interface FormInputsProyecto {
   tipoParticipante: ItemSelect[];
   categoriaProyectoId: LabelValue | null;
 }
+
+export interface FormInputsBitacora {
+  fecha: string;
+  nombrePersona: string;
+  proyectoId: LabelValue | null;
+  tipoAporteId: LabelValue | null;
+  cantidad: string;
+  observaciones: string;
+}
