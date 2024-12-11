@@ -16,6 +16,7 @@ import { NavItems } from "@/interface/interfaces";
 import { Dashboard } from "@/icons/dashboard";
 import { Reportes } from "@/icons/reportes";
 import { General } from "@/icons/general";
+//import { FaRegUser } from "react-icons/fa";
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
@@ -23,8 +24,9 @@ interface SidebarProps extends BoxProps {
 
 const LinkItems: Array<NavItems> = [
   { label: "Dashboard", url: "/dashboard", icon: Dashboard },
-  { label: "Proyectos", url: "/proyectos", icon: Dashboard },
-  { label: "Bitacora Proyectos", url: "/bitacora", icon: Dashboard },
+  { label: "Proyectos", url: "/proyectos", icon: General },
+  { label: "Bitacora Proyectos", url: "/bitacora", icon: General },
+  { label: "Afiliados", url: "/afiliados", icon: General },
   {
     label: "Ingreso/Egreso",
     icon: Dashboard,
@@ -57,7 +59,6 @@ const LinkItems: Array<NavItems> = [
       },
     ],
   },
-  { label: "Afiliados", url: "/afiliados", icon: General },
 ];
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {

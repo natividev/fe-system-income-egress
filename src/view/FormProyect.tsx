@@ -5,7 +5,16 @@ import { InputController } from "@/components/ui/inputControl/InputControl";
 import { SelectController } from "@/components/ui/selectControl/SelectControl";
 import { TextAreaController } from "@/components/ui/textareaControl/TextareaControl";
 import { FormInputsProyecto, resultApi } from "@/interface/interfaces";
-import { Box, FormControl, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  GridItem,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 interface Props {
@@ -14,6 +23,7 @@ interface Props {
 }
 
 export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
+  const router = useRouter();
   const { control, handleSubmit, reset, setValue, watch } =
     useForm<FormInputsProyecto>({
       defaultValues: {
@@ -31,7 +41,6 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
     const result = await onSubmit(data);
     if (result) reset();
   };
-  console.log(watch("tipoParticipante"));
 
   return (
     <Box
@@ -148,12 +157,17 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
           </GridItem>
         </SimpleGrid>
       </SimpleGrid>
-      <BtnLoading
-        onSubmit={handleSubmit(onSubmitWithReset)}
-        isLoading={isLoadig}
-        text={"Guardar"}
-        textLoading={"Guardando"}
-      />
+      <Flex justifyContent={"space-between"}>
+        <Button colorScheme="red" onClick={() => router.push("/proyectos")}>
+          CANCELAR
+        </Button>
+        <BtnLoading
+          onSubmit={handleSubmit(onSubmitWithReset)}
+          isLoading={isLoadig}
+          text={"Guardar"}
+          textLoading={"Guardando"}
+        />
+      </Flex>
     </Box>
   );
 };

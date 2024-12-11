@@ -120,3 +120,23 @@ export interface FormInputsBitacora {
   cantidad: string;
   observaciones: string;
 }
+
+interface Ubicacion {
+  latitud: number;
+  longitud: number;
+}
+
+export interface ColApiProyecto {
+  id: number;
+  nombre: string;
+  fecha: string; // Formato ISO 8601, podría ser Date si lo prefieres
+  ubicacion: Ubicacion;
+  cantidad: number;
+  observacion: string;
+  tipo_participante: string[];
+  fk_categoria_proyecto_id: number;
+  observaciones: string | null;
+  active: number;
+  fecha_creacion: string; // Formato ISO 8601, podría ser Date si lo prefieres
+  fecha_actualizacion: string; // Formato ISO 8601, podría ser Date si lo prefieres
+}

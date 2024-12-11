@@ -81,8 +81,8 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
           <FormControl id="proyectoId" isRequired>
             <SelectController
               isDefaultValue={false}
-              label={"Tipo Proyecto:"}
-              endpoint={"/categoria-proyecto"}
+              label={"Proyecto:"}
+              endpoint={"/proyecto/nombre"}
               disabledInput={isLoadig}
               name="proyectoId"
               placeholder=""
@@ -99,7 +99,7 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
           <FormControl id="tipoAporteId" isRequired>
             <SelectController
               isDefaultValue={false}
-              label={"Tipo Aprotacion:"}
+              label={"Tipo Aportacion:"}
               endpoint={"/proyecto/tipo-aportacion-proyecto"}
               disabledInput={isLoadig}
               name="tipoAporteId"
