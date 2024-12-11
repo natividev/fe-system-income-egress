@@ -29,6 +29,7 @@ export const SelectController = <T extends FieldValues>({
   isDefaultValue = true,
   disabledInput = false,
   endpoint,
+  isMulti = false,
 }: SelectControllerProps<T>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
@@ -75,6 +76,7 @@ export const SelectController = <T extends FieldValues>({
           <InputGroup zIndex={"1000"} width="100%">
             <AsyncSelect
               {...field}
+              isMulti={isMulti}
               id={name as string}
               isDisabled={disabledInput}
               placeholder={placeholder}

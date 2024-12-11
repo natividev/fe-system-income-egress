@@ -23,6 +23,7 @@ interface SidebarProps extends BoxProps {
 
 const LinkItems: Array<NavItems> = [
   { label: "Dashboard", url: "/dashboard", icon: Dashboard },
+  { label: "Proyectos", url: "/proyectos", icon: Dashboard },
   {
     label: "Ingreso/Egreso",
     icon: Dashboard,

@@ -30,6 +30,7 @@ export interface ItemSelect {
   value: string;
 }
 export interface SelectControllerProps<T extends FieldValues> {
+  isMulti?: boolean;
   name: Path<T>;
   label: string;
   control: Control<T>;
@@ -94,4 +95,19 @@ export interface FormInputsAfiliados {
 
 export interface resultApi {
   message: string;
+}
+
+interface Ubicacion {
+  latitud: number;
+  longitud: number;
+}
+
+export interface FormInputsProyecto {
+  nombre: string;
+  fecha: string;
+  ubicacion: Ubicacion;
+  cantidad: number;
+  observacion: string;
+  tipoParticipante: ItemSelect[];
+  categoriaProyectoId: LabelValue | null;
 }
