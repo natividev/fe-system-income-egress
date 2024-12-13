@@ -79,7 +79,8 @@ export default function RegisterFormControl({
 
   const handleCancela = () => {
     dispatch(resetStateEgrego({}));
-    router.push("/egreso");
+    const ruta = isIngreso ? "/ingreso" : "/egreso";
+    router.push(ruta);
   };
 
   useEffect(() => {
