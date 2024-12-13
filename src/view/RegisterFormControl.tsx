@@ -2,16 +2,29 @@ import BtnLoading from "@/components/ui/btnLoading/BtnLoading";
 import { InputController } from "@/components/ui/inputControl/InputControl";
 import { SelectController } from "@/components/ui/selectControl/SelectControl";
 import { TextAreaController } from "@/components/ui/textareaControl/TextareaControl";
+import { resetStateEgrego } from "@/features/egreso/egreso";
 import { FormInputs, resultApi } from "@/interface/interfaces";
-import { Box, FormControl, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
+import { RootState } from "@/store/store";
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  GridItem,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 interface Props {
   onSubmit: (data: FormInputs) => Promise<resultApi>;
   isLoadig: boolean;
   title: string;
   isIngreso: boolean;
+  defaultState: RootState;
 }
 
 export default function RegisterFormControl({
@@ -19,10 +32,36 @@ export default function RegisterFormControl({
   isLoadig,
   title,
   isIngreso,
+  defaultState,
 }: Props) {
+  ///const { stateEgreso } = defaultState;
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const { control, handleSubmit, reset, watch, setValue } = useForm<FormInputs>(
     {
       defaultValues: {
+        tipoAfiliado: null,
+        afiliado: null,
+        tipoDocumento: null,
+        actividadEconomica: defaultState?.stateEgreso?.nombre_actividad || "",
+        fechaActividad:
+          defaultState?.stateEgreso?.fecha_actividad?.split("T")[0] || "",
+        transaccion: defaultState?.stateEgreso?.no_transaccion || "",
+        tipoIngreso: null,
+        tipoControl: null,
+        tipoAportacion: null,
+        cantidad: defaultState?.stateEgreso?.cantidad || "",
+        observaciones: defaultState?.stateEgreso?.observaciones || "",
+      },
+    }
+  );
+
+  const [afilidoId, setAfiliadoId] = useState(2);
+  const onSubmitWithReset = async (data: FormInputs) => {
+    const result = await onSubmit(data);
+    if (result)
+      reset({
         tipoAfiliado: null,
         afiliado: null,
         tipoDocumento: null,
@@ -35,14 +74,12 @@ export default function RegisterFormControl({
         tipoAportacion: null,
         cantidad: "",
         observaciones: "",
-      },
-    }
-  );
+      });
+  };
 
-  const [afilidoId, setAfiliadoId] = useState(2);
-  const onSubmitWithReset = async (data: FormInputs) => {
-    const result = await onSubmit(data);
-    if (result) reset();
+  const handleCancela = () => {
+    dispatch(resetStateEgrego({}));
+    router.push("/egreso");
   };
 
   useEffect(() => {
@@ -67,10 +104,11 @@ export default function RegisterFormControl({
           <FormControl id="tipoAfiliado" isRequired>
             <SelectController
               label={"Tipo Afiliado:"}
-              endpoint={"afiliados"}
+              endpoint={"/afiliados"}
               disabledInput={isLoadig}
               name="tipoAfiliado"
               setValue={setValue}
+              dataFilters={defaultState?.stateEgreso?.fk_tipo_afiliado}
               watch={watch}
               placeholder=""
               control={control}
@@ -81,7 +119,7 @@ export default function RegisterFormControl({
           </FormControl>
         </GridItem>
         <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
-          <FormControl id="tipoAfiliado" isRequired>
+          <FormControl id="afiliado" isRequired>
             <SelectController
               label={"Afiliado:"}
               endpoint={`/afiliados/tipo-afiliados/${afilidoId}`}
@@ -90,6 +128,7 @@ export default function RegisterFormControl({
               setValue={setValue}
               watch={watch}
               placeholder=""
+              dataFilters={defaultState?.stateEgreso?.id_registro_afiliado}
               control={control}
               isDefaultValue={false}
               rules={{
@@ -101,7 +140,7 @@ export default function RegisterFormControl({
       </SimpleGrid>
 
       <SimpleGrid columns={{ sm: 1, md: 6, lg: 6 }} spacing={4} mb={5}>
-        <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
+        <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
           <FormControl id="firstName" isRequired>
             <InputController
               label={"Nombre de la actividad:"}
@@ -117,23 +156,7 @@ export default function RegisterFormControl({
             />
           </FormControl>
         </GridItem>
-        <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
-          <FormControl id="firstName" isRequired>
-            <InputController
-              label={"Numero Telefono:"}
-              disabledInput={isLoadig}
-              name="telefono"
-              type="text"
-              placeholder=""
-              control={control}
-              watch={watch}
-              rules={{
-                required: "Por favor ingrese el número de telefono",
-              }}
-            />
-          </FormControl>
-        </GridItem>
-        <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
+        <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
           <FormControl id="firstName" isRequired>
             <InputController
               label={"Fecha Actividad:"}
@@ -151,8 +174,8 @@ export default function RegisterFormControl({
         </GridItem>
       </SimpleGrid>
 
-      <SimpleGrid columns={{ sm: 1, md: 8, lg: 8 }} spacing={4} mb={5}>
-        <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
+      <SimpleGrid columns={{ sm: 1, md: 6, lg: 6 }} spacing={4} mb={5}>
+        <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
           <FormControl id="firstName">
             <InputController
               label={"No. Transaccion:"}
@@ -169,7 +192,7 @@ export default function RegisterFormControl({
           </FormControl>
         </GridItem>
         {isIngreso && (
-          <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
+          <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
             <FormControl id="firstName" isRequired>
               <SelectController
                 key={"ingreso"}
@@ -188,8 +211,8 @@ export default function RegisterFormControl({
             </FormControl>
           </GridItem>
         )}
-        <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
-          <FormControl id="firstName" isRequired>
+        <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
+          <FormControl id="tipoControl" isRequired>
             <SelectController
               key={"control"}
               label={"Tipo Control:"}
@@ -198,6 +221,7 @@ export default function RegisterFormControl({
               name="tipoControl"
               placeholder=""
               control={control}
+              dataFilters={defaultState?.stateEgreso?.fk_tipo_control}
               setValue={setValue}
               watch={watch}
               rules={{
@@ -206,8 +230,8 @@ export default function RegisterFormControl({
             />
           </FormControl>
         </GridItem>
-        <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
-          <FormControl id="firstName" isRequired>
+        <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
+          <FormControl id="tipoAportacion" isRequired>
             <SelectController
               key={"aprotacion"}
               label={"Tipo Aportacion:"}
@@ -216,6 +240,7 @@ export default function RegisterFormControl({
               name="tipoAportacion"
               placeholder=""
               control={control}
+              dataFilters={defaultState?.stateEgreso?.fk_tipo_aportacion}
               setValue={setValue}
               watch={watch}
               rules={{
@@ -224,13 +249,11 @@ export default function RegisterFormControl({
             />
           </FormControl>
         </GridItem>
-      </SimpleGrid>
-      <SimpleGrid columns={{ sm: 1, md: 8, lg: 8 }} spacing={4} mb={5}>
-        <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
+        <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
           <FormControl id="firstName" isRequired>
             <InputController
               label={"Cantidad:"}
-              disabledInput={isLoadig}
+              disabledInput={!!defaultState?.stateEgreso?.cantidad || isLoadig}
               name="cantidad"
               type="number"
               placeholder=""
@@ -261,12 +284,17 @@ export default function RegisterFormControl({
           </FormControl>
         </GridItem>
       </SimpleGrid>
-      <BtnLoading
-        onSubmit={handleSubmit(onSubmitWithReset)}
-        isLoading={isLoadig}
-        text={"Guardar"}
-        textLoading={"Guardando"}
-      />
+      <Flex justifyContent={"space-between"}>
+        <Button colorScheme="red" onClick={handleCancela}>
+          CANCELAR
+        </Button>
+        <BtnLoading
+          onSubmit={handleSubmit(onSubmitWithReset)}
+          isLoading={isLoadig}
+          text={"Guardar"}
+          textLoading={"Guardando"}
+        />
+      </Flex>
     </Box>
   );
 }

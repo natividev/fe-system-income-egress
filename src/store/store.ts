@@ -1,4 +1,5 @@
 import { stateSliceBitacora } from "@/features/bitacora/bitacora";
+import { stateSliceEgreso } from "@/features/egreso/egreso";
 import { stateSliceProyecto } from "@/features/protects/proyects";
 import { configureStore } from "@reduxjs/toolkit";
 
@@ -6,6 +7,7 @@ export const store = configureStore({
   reducer: {
     stateProyects: stateSliceProyecto.reducer,
     stateBitacora: stateSliceBitacora.reducer,
+    stateEgreso: stateSliceEgreso.reducer,
   },
 });
 

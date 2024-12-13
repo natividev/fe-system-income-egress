@@ -143,6 +143,18 @@ export interface ColApiProyecto {
   fecha_actualizacion: string; // Formato ISO 8601, podría ser Date si lo prefieres
 }
 
+export interface ColApiEgreso {
+  id: number;
+  nombre_actividad: string;
+  fecha_actividad: string;
+  cantidad: number;
+  id_registro_afiliado: number;
+  no_transaccion: string;
+  observaciones: string;
+  fk_tipo_aportacion: number;
+  fk_tipo_control: number;
+}
+
 export interface Proyecto {
   id?: number;
   nombre?: string;
@@ -174,6 +186,18 @@ export interface Bitacora {
   fecha_actualizacion?: string;
 }
 
+export interface Egreso {
+  id?: number;
+  nombre_actividad?: string;
+  fecha_actividad?: string;
+  cantidad?: string;
+  id_registro_afiliado?: number;
+  no_transaccion?: string;
+  observaciones?: string;
+  fk_tipo_aportacion?: number;
+  fk_tipo_control?: number;
+  fk_tipo_afiliado?: number;
+}
 export interface ColApiAporte {
   id: number;
   fecha: string;

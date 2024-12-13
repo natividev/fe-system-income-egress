@@ -68,7 +68,7 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
           <FormControl id="firstName" isRequired>
             <SelectController
               label={"Tipo Afiliado:"}
-              endpoint={"afiliados"}
+              endpoint={"/afiliados"}
               disabledInput={isLoadig}
               name="tipoAfiliado"
               placeholder=""

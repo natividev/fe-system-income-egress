@@ -15,10 +15,14 @@ import FooterInfo from "./FooterInfo";
 import FooterLimit from "./FooterLimit";
 import { TableLoading } from "./TableLoading";
 import TableBody from "./TableBody";
-import { ColApiAporte, ColApiProyecto } from "@/interface/interfaces";
+import {
+  ColApiAporte,
+  ColApiEgreso,
+  ColApiProyecto,
+} from "@/interface/interfaces";
 
 interface TablePaginationProps {
-  columns: ColumnDef<ColApiProyecto | ColApiAporte>[];
+  columns: ColumnDef<ColApiProyecto | ColApiAporte | ColApiEgreso>[];
   endpoint: string;
   rowEvent: ({
     event,
