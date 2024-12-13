@@ -2,13 +2,9 @@ import { Proyecto } from "@/interface/interfaces";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface CounterState {
-  value: number;
-}
-
 const initialState: Proyecto = {};
 
-export const stateSlice = createSlice({
+export const stateSliceProyecto = createSlice({
   name: "proyects",
   initialState,
   reducers: {
@@ -19,6 +15,6 @@ export const stateSlice = createSlice({
   },
 });
 
-export const { setState, resetState } = stateSlice.actions;
+export const { setState, resetState } = stateSliceProyecto.actions;
 
-export default stateSlice.reducer;
+export default stateSliceProyecto.reducer;

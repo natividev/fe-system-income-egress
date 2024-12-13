@@ -1,9 +1,11 @@
-import { stateSlice } from "@/features/protects/proyects";
+import { stateSliceBitacora } from "@/features/bitacora/bitacora";
+import { stateSliceProyecto } from "@/features/protects/proyects";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: {
-    state: stateSlice.reducer,
+    stateProyects: stateSliceProyecto.reducer,
+    stateBitacora: stateSliceBitacora.reducer,
   },
 });
 

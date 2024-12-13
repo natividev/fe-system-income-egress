@@ -33,19 +33,19 @@ export const FormProyect = ({
   defaultState,
   title,
 }: Props) => {
-  const { state } = defaultState;
+  const { stateProyects } = defaultState;
   const router = useRouter();
   const dispatch = useDispatch();
 
   const { control, handleSubmit, reset, setValue, watch } =
     useForm<FormInputsProyecto>({
       defaultValues: {
-        nombre: state?.nombre || "",
-        fecha: state?.fecha?.split("T")[0] || "",
-        ubicacion: state?.ubicacion || "",
-        cantidad: state?.cantidad || 0,
+        nombre: stateProyects?.nombre || "",
+        fecha: stateProyects?.fecha?.split("T")[0] || "",
+        ubicacion: stateProyects?.ubicacion || "",
+        cantidad: stateProyects?.cantidad || 0,
         categoriaProyectoId: null,
-        observacion: state?.observacion || "",
+        observacion: stateProyects?.observacion || "",
         tipoParticipante: [],
       },
     });
@@ -143,7 +143,7 @@ export const FormProyect = ({
               placeholder=""
               control={control}
               setValue={setValue}
-              dataFilters={state?.fk_categoria_proyecto_id}
+              dataFilters={stateProyects?.fk_categoria_proyecto_id}
               isDefaultValue={false}
               watch={watch}
               rules={{
@@ -164,7 +164,7 @@ export const FormProyect = ({
               control={control}
               setValue={setValue}
               isDefaultValue={false}
-              dataFilters={state?.tipo_participante}
+              dataFilters={stateProyects?.tipo_participante}
               watch={watch}
               rules={{
                 required: "Por favor ingrese el tipo participante",

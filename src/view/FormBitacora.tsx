@@ -4,33 +4,69 @@ import BtnLoading from "@/components/ui/btnLoading/BtnLoading";
 import { InputController } from "@/components/ui/inputControl/InputControl";
 import { SelectController } from "@/components/ui/selectControl/SelectControl";
 import { TextAreaController } from "@/components/ui/textareaControl/TextareaControl";
+import { resetState } from "@/features/protects/proyects";
 import { FormInputsBitacora, resultApi } from "@/interface/interfaces";
-import { Box, FormControl, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
+import { RootState } from "@/store/store";
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  GridItem,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 interface Props {
+  defaultState: RootState;
   onSubmit: (data: FormInputsBitacora) => Promise<resultApi>;
   isLoadig: boolean;
+  title: string;
 }
 
 const COLSPAN = { sm: 1, md: 2, lg: 1 };
 
-export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
+export const FormBitacora = ({
+  isLoadig,
+  onSubmit,
+  defaultState,
+  title,
+}: Props) => {
+  const { stateBitacora } = defaultState;
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const { control, handleSubmit, reset, setValue, watch } =
     useForm<FormInputsBitacora>({
       defaultValues: {
+        fecha: stateBitacora?.fecha?.split("T")[0] || "",
+        nombrePersona: stateBitacora?.nombre_persona || "",
+        proyectoId: null,
+        tipoAporteId: null,
+        cantidad: stateBitacora?.cantidad || "",
+        observaciones: stateBitacora?.observaciones || "",
+      },
+    });
+
+  const onSubmitWithReset = async (data: FormInputsBitacora) => {
+    const result = await onSubmit(data);
+    if (result)
+      reset({
         fecha: "",
         nombrePersona: "",
         proyectoId: null,
         tipoAporteId: null,
         cantidad: "",
         observaciones: "",
-      },
-    });
+      });
+  };
 
-  const onSubmitWithReset = async (data: FormInputsBitacora) => {
-    const result = await onSubmit(data);
-    if (result) reset();
+  const handleCancela = () => {
+    dispatch(resetState({}));
+    router.push("/bitacora");
   };
 
   return (
@@ -43,7 +79,7 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
       display={"block"}
     >
       <Text fontSize="2xl" mb={10} as="b">
-        BITACORA DE APORTACIONES A PROYECTO
+        {title}
       </Text>
 
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 2 }} spacing={4} mb={5}>
@@ -90,6 +126,7 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
               placeholder=""
               control={control}
               setValue={setValue}
+              dataFilters={stateBitacora?.fk_proyecto_id}
               watch={watch}
               rules={{
                 required: "Por favor ingrese el tipo documento",
@@ -108,6 +145,7 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
               placeholder=""
               control={control}
               setValue={setValue}
+              dataFilters={stateBitacora?.fk_tipo_aporte_id}
               watch={watch}
               rules={{
                 required: "Por favor ingrese el tipo de aprotacion",
@@ -148,12 +186,17 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
           </FormControl>
         </GridItem>
       </SimpleGrid>
-      <BtnLoading
-        onSubmit={handleSubmit(onSubmitWithReset)}
-        isLoading={isLoadig}
-        text={"Guardar"}
-        textLoading={"Guardando"}
-      />
+      <Flex justifyContent={"space-between"}>
+        <Button colorScheme="red" onClick={handleCancela}>
+          CANCELAR
+        </Button>
+        <BtnLoading
+          onSubmit={handleSubmit(onSubmitWithReset)}
+          isLoading={isLoadig}
+          text={"Guardar"}
+          textLoading={"Guardando"}
+        />
+      </Flex>
     </Box>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 import { TablePagination } from "@/components/ui/tablePagination/TablePagination";
-import { ColApiProyecto } from "@/interface/interfaces";
+import { ColApiAporte, ColApiProyecto } from "@/interface/interfaces";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
@@ -8,12 +8,12 @@ import { useRouter } from "next/navigation";
 import { Item, Menu } from "react-contexify";
 import { useContextMenu, ItemParams } from "react-contexify";
 import { useDispatch } from "react-redux";
-import { setState } from "@/features/protects/proyects";
+import { resetState, setState } from "@/features/protects/proyects";
 
 export default function ProyectosPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const columns = useMemo<ColumnDef<ColApiProyecto>[]>(
+  const columns = useMemo<ColumnDef<ColApiProyecto | ColApiAporte>[]>(
     () => [
       {
         header: "ID",
@@ -112,9 +112,12 @@ export default function ProyectosPage() {
         <Button
           colorScheme="blue"
           type="button"
-          onClick={() => router.push("/crear-proyectos")}
+          onClick={() => {
+            dispatch(resetState({}));
+            router.push("/crear-proyectos");
+          }}
         >
-          AGREGAR NUEVO
+          AGREGAR PROYECTOS
         </Button>
       </Flex>
       <TablePagination

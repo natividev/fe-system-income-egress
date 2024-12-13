@@ -40,8 +40,8 @@ export default function CrearProyectosPage() {
     try {
       const payload = buildPayload(data);
 
-      if (defaultState?.state?.id) {
-        const { id } = defaultState?.state;
+      if (defaultState?.stateProyects?.id) {
+        const { id } = defaultState?.stateProyects;
         const endpoint = `/proyecto?id=${id}`;
         const { data: result } = await axiosInstance.patch(endpoint, payload);
         dispatch(resetState({}));
@@ -62,7 +62,9 @@ export default function CrearProyectosPage() {
       onSubmit={onSubmit}
       isLoadig={isLoadig}
       title={
-        defaultState?.state?.id ? "ACTUALIZAR PROYECTOS" : "CREAR PROYECTOS"
+        defaultState?.stateProyects?.id
+          ? "ACTUALIZAR PROYECTOS"
+          : "CREAR PROYECTOS"
       }
     />
   );

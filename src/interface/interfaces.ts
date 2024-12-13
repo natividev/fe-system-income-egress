@@ -160,3 +160,29 @@ export interface Proyecto {
   fecha_creacion?: string;
   fecha_actualizacion?: string;
 }
+
+export interface Bitacora {
+  id?: number;
+  fecha?: string;
+  nombre_persona?: string;
+  fk_proyecto_id?: number;
+  fk_tipo_aporte_id?: number;
+  cantidad?: string;
+  observaciones?: string | null;
+  active?: number;
+  fecha_creacion?: string;
+  fecha_actualizacion?: string;
+}
+
+export interface ColApiAporte {
+  id: number;
+  fecha: string;
+  nombre_persona: string;
+  fk_proyecto_id: number;
+  fk_tipo_aporte_id: number;
+  cantidad: string;
+  observaciones: string | null;
+  active: number;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+}
