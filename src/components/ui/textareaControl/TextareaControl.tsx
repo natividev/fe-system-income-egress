@@ -14,6 +14,7 @@ export const TextAreaController = <T extends FieldValues>({
   label,
   name,
   control,
+  watch,
   rules,
   placeholder,
   disabledInput = false,
@@ -23,7 +24,7 @@ export const TextAreaController = <T extends FieldValues>({
       name={name}
       control={control}
       rules={rules}
-      render={({ field, fieldState }) => (
+      render={({ fieldState, field: { onBlur, onChange } }) => (
         <FormControl isInvalid={!!fieldState.error}>
           <FormLabel
             color={fieldState.error ? "red" : "#000"}
@@ -37,7 +38,9 @@ export const TextAreaController = <T extends FieldValues>({
               id={name as string}
               disabled={disabledInput}
               placeholder={placeholder}
-              {...field}
+              value={watch(name)}
+              onChange={onChange}
+              onBlur={onBlur}
             />
             {children}
           </InputGroup>

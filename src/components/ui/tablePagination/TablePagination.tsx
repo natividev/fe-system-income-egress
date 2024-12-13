@@ -4,6 +4,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  RowData,
   useReactTable,
 } from "@tanstack/react-table";
 import { Flex, TableContainer } from "@chakra-ui/react";
@@ -19,11 +20,19 @@ import { ColApiProyecto } from "@/interface/interfaces";
 interface TablePaginationProps {
   columns: ColumnDef<ColApiProyecto>[];
   endpoint: string;
+  rowEvent: ({
+    event,
+    props,
+  }: {
+    event: React.MouseEvent;
+    props: RowData;
+  }) => void;
 }
 
 export const TablePagination: React.FC<TablePaginationProps> = ({
   columns,
   endpoint,
+  rowEvent,
 }) => {
   const {
     endpointUser,
@@ -57,7 +66,11 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
 
   return (
     <TableContainer>
-      {state.isLoading ? <TableLoading /> : <TableBody table={table} />}
+      {state.isLoading ? (
+        <TableLoading />
+      ) : (
+        <TableBody rowEvent={rowEvent} table={table} />
+      )}
       <Flex justifyContent={"space-between"} alignItems={"center"} mt={4}>
         <FooterPagination
           state={state}

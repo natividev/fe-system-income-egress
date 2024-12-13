@@ -55,6 +55,7 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
               name={"fecha"}
               type="date"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: "Por favor ingrese una fecha valida",
@@ -70,6 +71,7 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
               name={"nombrePersona"}
               type="text"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: "Por favor ingrese el nombre completo",
@@ -121,6 +123,7 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
               name={"cantidad"}
               type="text"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: "Por favor ingrese una cantidad",
@@ -136,6 +139,7 @@ export const FormBitacora = ({ isLoadig, onSubmit }: Props) => {
               name="observaciones"
               type="text"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: false,

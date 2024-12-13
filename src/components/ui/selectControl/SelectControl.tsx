@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Controller, FieldValues } from "react-hook-form";
-import { SelectControllerProps } from "@/interface/interfaces";
+import { LabelValue, SelectControllerProps } from "@/interface/interfaces";
 import {
   FormControl,
   FormLabel,
@@ -29,6 +29,7 @@ export const SelectController = <T extends FieldValues>({
   isDefaultValue = true,
   disabledInput = false,
   endpoint,
+  dataFilters,
   isMulti = false,
 }: SelectControllerProps<T>) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,20 +40,30 @@ export const SelectController = <T extends FieldValues>({
       setIsLoading(true);
       const { data } = await axiosInstance.get(endpoint);
 
-      if (data) {
-        const option = data.map((element: items) => {
-          return {
-            label:
-              element?.nombre || element?.descripcion || element?.razon_social,
-            value: element.id,
-          };
-        });
-        if (isDefaultValue) setValue(name, option[0]);
-        setOptions(option);
-        setIsLoading(false);
-      }
+      if (!data) return;
+
+      const option = data.map((element: items) => ({
+        label: element?.nombre || element?.descripcion || element?.razon_social,
+        value: element.id,
+      }));
+      setOptions(option);
+
+      if (isDefaultValue) setValue(name, option[0]);
+      if (!dataFilters) return;
+
+      const dataFilter = option.filter((element: LabelValue) => {
+        if (Array.isArray(dataFilters)) {
+          return dataFilters.includes(element.label);
+        }
+        return element.label === dataFilters || element.value === dataFilters;
+      });
+
+      if (dataFilter) setValue(name, dataFilter);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

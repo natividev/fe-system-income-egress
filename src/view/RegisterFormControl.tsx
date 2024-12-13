@@ -110,6 +110,7 @@ export default function RegisterFormControl({
               type="text"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese actividad economica",
               }}
@@ -125,6 +126,7 @@ export default function RegisterFormControl({
               type="text"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese el número de telefono",
               }}
@@ -140,6 +142,7 @@ export default function RegisterFormControl({
               type="date"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese la fecha de la actividad",
               }}
@@ -158,6 +161,7 @@ export default function RegisterFormControl({
               type="text"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese el no. transaccion",
               }}
@@ -230,6 +234,7 @@ export default function RegisterFormControl({
               name="cantidad"
               type="number"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: "Por favor ingrese la cantidad",
@@ -247,6 +252,7 @@ export default function RegisterFormControl({
               name="observaciones"
               type="text"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: false,

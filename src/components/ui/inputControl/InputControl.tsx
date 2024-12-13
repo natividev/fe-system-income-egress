@@ -16,6 +16,7 @@ export const InputController = <T extends FieldValues>({
   control,
   type = "text",
   rules,
+  watch,
   placeholder,
   disabledInput = false,
 }: InputControllerProps<T>) => {
@@ -24,7 +25,7 @@ export const InputController = <T extends FieldValues>({
       name={name}
       control={control}
       rules={rules}
-      render={({ fieldState, field: { onBlur, value, onChange } }) => (
+      render={({ fieldState, field: { onBlur, onChange } }) => (
         <FormControl isInvalid={!!fieldState.error}>
           <FormLabel
             color={fieldState.error ? "red" : "#000"}
@@ -40,9 +41,9 @@ export const InputController = <T extends FieldValues>({
               id={name as string}
               disabled={disabledInput}
               placeholder={placeholder}
-              onBlur={onBlur}
-              value={value}
+              value={watch(name)}
               onChange={onChange}
+              onBlur={onBlur}
             />
             {children}
           </InputGroup>

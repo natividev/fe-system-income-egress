@@ -4,7 +4,9 @@ import BtnLoading from "@/components/ui/btnLoading/BtnLoading";
 import { InputController } from "@/components/ui/inputControl/InputControl";
 import { SelectController } from "@/components/ui/selectControl/SelectControl";
 import { TextAreaController } from "@/components/ui/textareaControl/TextareaControl";
+import { resetState } from "@/features/protects/proyects";
 import { FormInputsProyecto, resultApi } from "@/interface/interfaces";
+import { RootState } from "@/store/store";
 import {
   Box,
   Button,
@@ -16,17 +18,47 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 interface Props {
+  defaultState: RootState;
   onSubmit: (data: FormInputsProyecto) => Promise<resultApi>;
   isLoadig: boolean;
+  title: string;
 }
 
-export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
+export const FormProyect = ({
+  onSubmit,
+  isLoadig,
+  defaultState,
+  title,
+}: Props) => {
+  const { state } = defaultState;
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const { control, handleSubmit, reset, setValue, watch } =
     useForm<FormInputsProyecto>({
       defaultValues: {
+        nombre: state?.nombre || "",
+        fecha: state?.fecha?.split("T")[0] || "",
+        ubicacion: state?.ubicacion || "",
+        cantidad: state?.cantidad || 0,
+        categoriaProyectoId: null,
+        observacion: state?.observacion || "",
+        tipoParticipante: [],
+      },
+    });
+
+  const handleCancela = () => {
+    dispatch(resetState({}));
+    router.push("/proyectos");
+  };
+
+  const onSubmitWithReset = async (data: FormInputsProyecto) => {
+    const result = await onSubmit(data);
+    if (result) {
+      reset({
         nombre: "",
         fecha: "",
         ubicacion: {},
@@ -34,12 +66,8 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
         categoriaProyectoId: null,
         observacion: "",
         tipoParticipante: [],
-      },
-    });
-
-  const onSubmitWithReset = async (data: FormInputsProyecto) => {
-    const result = await onSubmit(data);
-    if (result) reset();
+      });
+    }
   };
 
   return (
@@ -52,7 +80,7 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
       display={"block"}
     >
       <Text fontSize="4xl" mb={10} as="b">
-        CREAR PROYECTOS
+        {title}
       </Text>
 
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 2 }} spacing={4} mb={5}>
@@ -60,6 +88,7 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
           <FormControl id="Nombre" isRequired>
             <InputController
               label={"Nombre:"}
+              watch={watch}
               disabledInput={isLoadig}
               name={"nombre"}
               type="text"
@@ -80,6 +109,7 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
               type="date"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese una fecha valida",
               }}
@@ -95,6 +125,7 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
               name={"cantidad"}
               type="number"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: "Por favor ingrese una cantidad",
@@ -112,6 +143,7 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
               placeholder=""
               control={control}
               setValue={setValue}
+              dataFilters={state?.fk_categoria_proyecto_id}
               isDefaultValue={false}
               watch={watch}
               rules={{
@@ -132,6 +164,7 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
               control={control}
               setValue={setValue}
               isDefaultValue={false}
+              dataFilters={state?.tipo_participante}
               watch={watch}
               rules={{
                 required: "Por favor ingrese el tipo participante",
@@ -149,6 +182,7 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
                 type="text"
                 placeholder=""
                 control={control}
+                watch={watch}
                 rules={{
                   required: false,
                 }}
@@ -158,7 +192,7 @@ export const FormProyect = ({ onSubmit, isLoadig }: Props) => {
         </SimpleGrid>
       </SimpleGrid>
       <Flex justifyContent={"space-between"}>
-        <Button colorScheme="red" onClick={() => router.push("/proyectos")}>
+        <Button colorScheme="red" onClick={handleCancela}>
           CANCELAR
         </Button>
         <BtnLoading

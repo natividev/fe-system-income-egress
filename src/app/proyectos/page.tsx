@@ -5,8 +5,13 @@ import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { Item, Menu } from "react-contexify";
+import { useContextMenu, ItemParams } from "react-contexify";
+import { useDispatch } from "react-redux";
+import { setState } from "@/features/protects/proyects";
 
 export default function ProyectosPage() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const columns = useMemo<ColumnDef<ColApiProyecto>[]>(
     () => [
@@ -83,6 +88,14 @@ export default function ProyectosPage() {
     []
   );
 
+  const MENU_ID = "factura_context_menu";
+  const { show } = useContextMenu({ id: MENU_ID });
+
+  const handleItemActualizar = ({ props }: ItemParams) => {
+    dispatch(setState(props?.original));
+    router.push("/crear-proyectos");
+  };
+
   return (
     <Box
       p={5}
@@ -104,7 +117,15 @@ export default function ProyectosPage() {
           AGREGAR NUEVO
         </Button>
       </Flex>
-      <TablePagination columns={columns} endpoint={"proyecto"} />
+      <TablePagination
+        rowEvent={show}
+        columns={columns}
+        endpoint={"proyecto"}
+      />
+      <Menu id={MENU_ID}>
+        <Item onClick={handleItemActualizar}>ACTUALIZAR</Item>
+        <Item>ELIMINAR</Item>
+      </Menu>
     </Box>
   );
 }

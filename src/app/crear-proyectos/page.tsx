@@ -1,10 +1,15 @@
 "use client";
 import axiosInstance from "@/api/axiosInstance";
+import { resetState } from "@/features/protects/proyects";
 import { FormInputsProyecto, ItemSelect } from "@/interface/interfaces";
+import { RootState } from "@/store/store";
 import { FormProyect } from "@/view/FormProyect";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CrearProyectosPage() {
+  const defaultState = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
   const [isLoadig, setIsLoading] = useState<boolean>(false);
 
   const buildPayload = (data: FormInputsProyecto) => {
@@ -32,12 +37,33 @@ export default function CrearProyectosPage() {
 
   const onSubmit = async (data: FormInputsProyecto) => {
     setIsLoading(true);
-    const payload = buildPayload(data);
+    try {
+      const payload = buildPayload(data);
 
-    const { data: result } = await axiosInstance.post("/proyecto", payload);
-    setIsLoading(false);
-    return result;
+      if (defaultState?.state?.id) {
+        const { id } = defaultState?.state;
+        const endpoint = `/proyecto?id=${id}`;
+        const { data: result } = await axiosInstance.patch(endpoint, payload);
+        dispatch(resetState({}));
+        return result;
+      }
+      const { data: result } = await axiosInstance.post("/proyecto", payload);
+      return result;
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  return <FormProyect onSubmit={onSubmit} isLoadig={isLoadig} />;
+  return (
+    <FormProyect
+      defaultState={defaultState}
+      onSubmit={onSubmit}
+      isLoadig={isLoadig}
+      title={
+        defaultState?.state?.id ? "ACTUALIZAR PROYECTOS" : "CREAR PROYECTOS"
+      }
+    />
+  );
 }

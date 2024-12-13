@@ -5,9 +5,7 @@ import {
   showAlertLoading,
   showAlertSuccess,
 } from "@/utils/Alerts/Alerts";
-import { useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
-import { useContextMenu, ItemParams } from "react-contexify";
 
 // Tipos
 interface Page {
@@ -45,7 +43,6 @@ export const useTablePagination = () => {
     isLoading: false,
   });
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [endpointUser, setEndpointUser] = useState<string | null>(null);
   const [urlPdf, setUrlPdf] = useState("");
   const [modalEmail, setModalEmail] = useState<boolean>(false);
@@ -53,9 +50,6 @@ export const useTablePagination = () => {
   const [codigoGeneracion, setCodigoGeneracion] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [isLoadingEmail, setIsLoadingEmail] = useState<boolean>(false);
-
-  const MENU_ID = "factura_context_menu";
-  const { show } = useContextMenu({ id: MENU_ID });
 
   const endpoint = (page: number, limit: number) => {
     return `${endpointUser}?limit=${limit}&page=${page}`;
@@ -107,30 +101,6 @@ export const useTablePagination = () => {
     fetchData(1, newLimit);
   };
 
-  const printReceipt = async (codigoGeneracion: string) => {
-    const textAlert = "Generando el comprobante, por favor espera";
-    showAlertLoading(textAlert, true);
-    try {
-      const { data } = await axiosInstance.get(
-        `/factura-electronica/generar-factura?codigoGeneracion=${codigoGeneracion}`,
-        { responseType: "arraybuffer" }
-      );
-      if (data) {
-        const urlBlob = window.URL.createObjectURL(
-          new Blob([data], { type: "application/pdf" })
-        );
-        setUrlPdf(urlBlob);
-        onOpen();
-        showAlertSuccess("Comprobante generado exitosamente", false);
-      }
-    } catch (error) {
-      console.log({ error });
-      showAlertError("Hubo un problema al generar el comprobante");
-    } finally {
-      showAlertLoading(textAlert, false);
-    }
-  };
-
   const sendFactura = async (codigoGeneracion: string) => {
     const textAlert = "Enviando la factura, por favor espera";
     showAlertLoading(textAlert, true);
@@ -157,21 +127,8 @@ export const useTablePagination = () => {
     }
   };
 
-  const handleItemClick = ({ props }: ItemParams<ColApiProyecto>) => {
-    //if (props) printReceipt(props.codigo_generacion);
-  };
-
   const handleCItemEnviarFactura = () => {
     if (codigoGeneracion) sendFactura(codigoGeneracion);
-  };
-
-  const handleSentEmail = ({ props }: ItemParams<ColApiProyecto>) => {
-    /* if (!props) {
-      return showAlertError("Error al obtener el codigo  de generación");
-    }
-    setModalEmail(true);
-    setEmail(props.jsondte.documento.receptor.correo);
-    setCodigoGeneracion(props.codigo_generacion); */
   };
 
   const isValidPage = () => {
@@ -219,14 +176,8 @@ export const useTablePagination = () => {
     firstPage,
     lastPage,
     setLimitPage,
-    show,
-    MENU_ID,
     urlPdf,
     setUrlPdf,
-    isOpen,
-    onClose,
-    handleItemClick,
-    handleSentEmail,
     handleOnKeyUp,
     handleCItemEnviarFactura,
   };

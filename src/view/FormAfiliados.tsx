@@ -57,6 +57,7 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
               type="text"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese el nombre",
               }}
@@ -106,6 +107,7 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
               type="number"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese el número de documento",
               }}
@@ -121,6 +123,7 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
               type="date"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese la fecha",
               }}
@@ -136,6 +139,7 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
               type="email"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese la correo",
               }}
@@ -151,6 +155,7 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
               type="number"
               placeholder=""
               control={control}
+              watch={watch}
               rules={{
                 required: "Por favor ingrese el numero de telefono",
               }}
@@ -165,6 +170,7 @@ export default function FormAfiliados({ onSubmit, isLoadig, title }: Props) {
               name="observaciones"
               type="text"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: false,

@@ -94,6 +94,7 @@ export default function GenerarInformes({ endpoint, title, btnTitle }: Props) {
               name="desde"
               type="date"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: "Por favor ingrese la fecha de inicio",
@@ -109,6 +110,7 @@ export default function GenerarInformes({ endpoint, title, btnTitle }: Props) {
               name="hasta"
               type="date"
               placeholder=""
+              watch={watch}
               control={control}
               rules={{
                 required: "Por favor la fecha final",

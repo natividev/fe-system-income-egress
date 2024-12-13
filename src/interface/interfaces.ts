@@ -18,6 +18,7 @@ export interface InputControllerProps<T extends FieldValues> {
   placeholder: string;
   children?: ReactNode;
   disabledInput: boolean;
+  watch: UseFormWatch<T>;
 }
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -41,6 +42,7 @@ export interface SelectControllerProps<T extends FieldValues> {
   disabledInput: boolean;
   endpoint: string;
   isDefaultValue?: boolean;
+  dataFilters?: string | number | string[];
 }
 
 interface NavItem {
@@ -56,7 +58,7 @@ export interface NavItems {
   href?: string;
 }
 
-interface LabelValue {
+export interface LabelValue {
   label: string;
   value: number;
 }
@@ -105,7 +107,7 @@ interface Ubicacion {
 export interface FormInputsProyecto {
   nombre: string;
   fecha: string;
-  ubicacion: Ubicacion;
+  ubicacion: Ubicacion | string;
   cantidad: number;
   observacion: string;
   tipoParticipante: ItemSelect[];
@@ -139,4 +141,22 @@ export interface ColApiProyecto {
   active: number;
   fecha_creacion: string; // Formato ISO 8601, podría ser Date si lo prefieres
   fecha_actualizacion: string; // Formato ISO 8601, podría ser Date si lo prefieres
+}
+
+export interface Proyecto {
+  id?: number;
+  nombre?: string;
+  fecha?: string;
+  ubicacion?: {
+    latitud?: number;
+    longitud?: number;
+  };
+  cantidad?: number;
+  observacion?: string;
+  tipo_participante?: string[];
+  fk_categoria_proyecto_id?: number;
+  observaciones?: string | null;
+  active?: number;
+  fecha_creacion?: string;
+  fecha_actualizacion?: string;
 }
