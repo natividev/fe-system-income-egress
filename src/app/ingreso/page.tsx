@@ -98,7 +98,7 @@ export default function IngresoPage() {
             router.push("/crear-ingreso");
           }}
         >
-          AGREGAR EGRESO
+          AGREGAR INGRESO
         </Button>
       </Flex>
 
