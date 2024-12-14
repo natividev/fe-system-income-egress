@@ -57,6 +57,10 @@ const LinkItems: Array<NavItems> = [
         label: "Reporte general",
         href: "/reporte-general",
       },
+      {
+        label: "Aportaciones por proyecto",
+        href: "/reporte-aportaciones",
+      }
     ],
   },
 ];
