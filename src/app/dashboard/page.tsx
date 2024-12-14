@@ -70,32 +70,32 @@ export default function DashboardPage() {
       <Text fontSize={"xl"} as="b">
         DASHBOARD
       </Text>
-      <Flex>
-        <Flex align={"center"}>
-          <Text fontSize={"md"}>INGRESO </Text>
-          <Box
-            display={"block"}
-            w={"1rem"}
-            h={"1rem"}
-            bg={"green"}
-            ml={"0.5rem"}
-          ></Box>
-        </Flex>
-        <Flex align={"center"} ml={"1rem"}>
-          <Text fontSize={"md"}>EGRESO</Text>
-          <Box
-            display={"block"}
-            w={"1rem"}
-            h={"1rem"}
-            bg={"red"}
-            ml={"0.5rem"}
-          ></Box>
-        </Flex>
-      </Flex>
       <Flex direction={"column"} mt={"3rem"} mb={"1rem"}>
         <Text fontSize={"md"} as={"b"}>
           GRÁFICA TRANSACCIONES
         </Text>
+        <Flex>
+          <Flex align={"center"}>
+            <Text fontSize={"md"}>INGRESO </Text>
+            <Box
+              display={"block"}
+              w={"1rem"}
+              h={"1rem"}
+              bg={"blue"}
+              ml={"0.5rem"}
+            ></Box>
+          </Flex>
+          <Flex align={"center"} ml={"1rem"}>
+            <Text fontSize={"md"}>EGRESO</Text>
+            <Box
+              display={"block"}
+              w={"1rem"}
+              h={"1rem"}
+              bg={"red"}
+              ml={"0.5rem"}
+            ></Box>
+          </Flex>
+        </Flex>
         <BaselineChart incomeData={ingresos} expenseData={egresos} />
       </Flex>
       <Flex direction={"column"} mt={"3rem"} mb={"1rem"}>
