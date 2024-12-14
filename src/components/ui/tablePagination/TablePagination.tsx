@@ -16,13 +16,13 @@ import FooterLimit from "./FooterLimit";
 import { TableLoading } from "./TableLoading";
 import TableBody from "./TableBody";
 import {
-  ColApiAporte,
-  ColApiEgreso,
-  ColApiProyecto,
+  columnType,
 } from "@/interface/interfaces";
 
+
+
 interface TablePaginationProps {
-  columns: ColumnDef<ColApiProyecto | ColApiAporte | ColApiEgreso>[];
+  columns: ColumnDef<columnType>[];
   endpoint: string;
   rowEvent: ({
     event,

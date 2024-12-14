@@ -1,7 +1,7 @@
 "use client";
 import { TablePagination } from "@/components/ui/tablePagination/TablePagination";
 import { resetState, setState } from "@/features/bitacora/bitacora";
-import { ColApiAporte, ColApiProyecto } from "@/interface/interfaces";
+import {  columnType } from "@/interface/interfaces";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 export default function BitacoraPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const columns = useMemo<ColumnDef<ColApiProyecto | ColApiAporte>[]>(
+  const columns = useMemo<ColumnDef<columnType>[]>(
     () => [
       {
         header: "ID",

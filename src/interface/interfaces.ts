@@ -210,3 +210,5 @@ export interface ColApiAporte {
   fecha_creacion: string;
   fecha_actualizacion: string;
 }
+
+export type columnType = ColApiProyecto | ColApiAporte | ColApiEgreso;
