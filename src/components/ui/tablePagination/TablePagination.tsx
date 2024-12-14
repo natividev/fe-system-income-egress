@@ -15,15 +15,12 @@ import FooterInfo from "./FooterInfo";
 import FooterLimit from "./FooterLimit";
 import { TableLoading } from "./TableLoading";
 import TableBody from "./TableBody";
-import {
-  columnType,
-} from "@/interface/interfaces";
-
-
+import { columnType } from "@/interface/interfaces";
 
 interface TablePaginationProps {
   columns: ColumnDef<columnType>[];
   endpoint: string;
+  reload?: number;
   rowEvent: ({
     event,
     props,
@@ -37,6 +34,7 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
   columns,
   endpoint,
   rowEvent,
+  reload,
 }) => {
   const {
     endpointUser,
@@ -57,7 +55,7 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
 
   useEffect(() => {
     getData();
-  }, [endpointUser]); //eslint-disable-line
+  }, [endpointUser, reload]); //eslint-disable-line
 
   const table = useReactTable({
     columns,

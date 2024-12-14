@@ -123,6 +123,11 @@ export interface FormInputsBitacora {
   observaciones: string;
 }
 
+export interface FormInputsAnulaciones {
+  monto: number;
+  motivo: null | "";
+}
+
 interface Ubicacion {
   latitud: number;
   longitud: number;

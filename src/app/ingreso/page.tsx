@@ -2,14 +2,18 @@
 import { TablePagination } from "@/components/ui/tablePagination/TablePagination";
 import { resetStateEgrego, setStateEgreso } from "@/features/egreso/egreso";
 import { columnType } from "@/interface/interfaces";
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { FormAnulaciones } from "@/view/FormAnulaciones";
+import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Item, ItemParams, Menu, useContextMenu } from "react-contexify";
 import { useDispatch } from "react-redux";
 
 export default function IngresoPage() {
+  const [idAnulacion, setAnulacion] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [reload, setReload] = useState(0);
   const dispatch = useDispatch();
   const router = useRouter();
   const columns = useMemo<ColumnDef<columnType>[]>(
@@ -67,6 +71,12 @@ export default function IngresoPage() {
     router.push("/crear-ingreso");
   };
 
+  const handleIntemAnular = ({ props }: ItemParams) => {
+    const { id } = props?.original;
+    setAnulacion(id);
+    onOpen();
+  };
+
   return (
     <Box
       p={5}
@@ -91,11 +101,27 @@ export default function IngresoPage() {
           AGREGAR EGRESO
         </Button>
       </Flex>
-      <TablePagination rowEvent={show} columns={columns} endpoint={"ingreso"} />
+
+      <TablePagination
+        reload={reload}
+        rowEvent={show}
+        columns={columns}
+        endpoint={"ingreso"}
+      />
+
       <Menu id={MENU_ID}>
         <Item onClick={handleItemActualizar}>ACTUALIZAR</Item>
-        <Item>ELIMINAR</Item>
+        <Item onClick={handleIntemAnular}>ANULAR INGRESO</Item>
       </Menu>
+
+      <FormAnulaciones
+        id={idAnulacion}
+        onClose={onClose}
+        isOpen={isOpen}
+        endpoint="/anulacion/ingreso"
+        reload={reload}
+        setReload={setReload}
+      />
     </Box>
   );
 }
