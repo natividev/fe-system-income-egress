@@ -80,8 +80,8 @@ export interface FormInputs {
 }
 
 export interface FormInputsInforme {
-  desde: "";
-  hasta: "";
+  desde: string;
+  hasta: string;
 }
 
 export interface FormInputsAfiliados {

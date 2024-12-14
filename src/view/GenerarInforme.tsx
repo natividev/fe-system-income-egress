@@ -8,6 +8,7 @@ import {
   showAlertLoading,
   showAlertSuccess,
 } from "@/util/Alerts/Alerts";
+import { obtenerFechaFormateada, obtenerFinDeMes } from "@/utils/Date/Date";
 import {
   Button,
   Flex,
@@ -39,8 +40,8 @@ export default function GenerarInformes({ endpoint, title, btnTitle }: Props) {
 
   const { control, handleSubmit, reset, watch } = useForm<FormInputsInforme>({
     defaultValues: {
-      desde: "",
-      hasta: "",
+      desde: obtenerFechaFormateada(), 
+      hasta: obtenerFinDeMes(),
     },
   });
 
@@ -87,9 +88,9 @@ export default function GenerarInformes({ endpoint, title, btnTitle }: Props) {
       </Text>
       <SimpleGrid columns={{ sm: 1, md: 12, lg: 12 }} spacing={4} mb={5}>
         <GridItem colSpan={{ sm: 1, md: 4, lg: 4 }}>
-          <FormControl id="firstName" isRequired>
+          <FormControl id="desde" isRequired>
             <InputController
-              label={"Nombre de la actividad:"}
+              label={"Desde:"}
               disabledInput={isLoadig}
               name="desde"
               type="date"
@@ -103,9 +104,9 @@ export default function GenerarInformes({ endpoint, title, btnTitle }: Props) {
           </FormControl>
         </GridItem>
         <GridItem colSpan={{ sm: 1, md: 4, lg: 4 }}>
-          <FormControl id="firstName" isRequired>
+          <FormControl id="hasta" isRequired>
             <InputController
-              label={"Nombre de la actividad:"}
+              label={"Hasta:"}
               disabledInput={isLoadig}
               name="hasta"
               type="date"

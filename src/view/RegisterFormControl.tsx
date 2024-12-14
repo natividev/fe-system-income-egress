@@ -5,6 +5,7 @@ import { TextAreaController } from "@/components/ui/textareaControl/TextareaCont
 import { resetStateEgrego } from "@/features/egreso/egreso";
 import { FormInputs, resultApi } from "@/interface/interfaces";
 import { RootState } from "@/store/store";
+import { obtenerFechaFormateada } from "@/utils/Date/Date";
 import {
   Box,
   Button,
@@ -46,7 +47,7 @@ export default function RegisterFormControl({
         tipoDocumento: null,
         actividadEconomica: defaultState?.stateEgreso?.nombre_actividad || "",
         fechaActividad:
-          defaultState?.stateEgreso?.fecha_actividad?.split("T")[0] || "",
+          defaultState?.stateEgreso?.fecha_actividad?.split("T")[0] || obtenerFechaFormateada(),
         transaccion: defaultState?.stateEgreso?.no_transaccion || "",
         tipoIngreso: null,
         tipoControl: null,
@@ -158,7 +159,7 @@ export default function RegisterFormControl({
           </FormControl>
         </GridItem>
         <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
-          <FormControl id="firstName" isRequired>
+          <FormControl id="fechaActividad" isRequired>
             <InputController
               label={"Fecha Actividad:"}
               disabledInput={isLoadig}
@@ -177,7 +178,7 @@ export default function RegisterFormControl({
 
       <SimpleGrid columns={{ sm: 1, md: 6, lg: 6 }} spacing={4} mb={5}>
         <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
-          <FormControl id="firstName">
+          <FormControl id="transaccion">
             <InputController
               label={"No. Transaccion:"}
               disabledInput={isLoadig}
@@ -194,7 +195,7 @@ export default function RegisterFormControl({
         </GridItem>
         {isIngreso && (
           <GridItem colSpan={{ sm: 1, md: 3, lg: 3 }}>
-            <FormControl id="firstName" isRequired>
+            <FormControl id="tipoIngreso" isRequired>
               <SelectController
                 key={"ingreso"}
                 label={"Tipo Ingreso:"}
