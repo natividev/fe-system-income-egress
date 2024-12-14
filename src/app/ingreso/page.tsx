@@ -1,11 +1,7 @@
 "use client";
 import { TablePagination } from "@/components/ui/tablePagination/TablePagination";
 import { resetStateEgrego, setStateEgreso } from "@/features/egreso/egreso";
-import {
-  ColApiAporte,
-  ColApiEgreso,
-  ColApiProyecto,
-} from "@/interface/interfaces";
+import { columnType } from "@/interface/interfaces";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
@@ -16,9 +12,7 @@ import { useDispatch } from "react-redux";
 export default function IngresoPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const columns = useMemo<
-    ColumnDef<ColApiProyecto | ColApiAporte | ColApiEgreso>[]
-  >(
+  const columns = useMemo<ColumnDef<columnType>[]>(
     () => [
       {
         header: "Nombre de Actividad",

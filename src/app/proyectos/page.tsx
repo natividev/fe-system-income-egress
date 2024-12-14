@@ -1,6 +1,6 @@
 "use client";
 import { TablePagination } from "@/components/ui/tablePagination/TablePagination";
-import { ColApiAporte, ColApiProyecto } from "@/interface/interfaces";
+import { columnType } from "@/interface/interfaces";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
@@ -13,7 +13,7 @@ import { resetState, setState } from "@/features/protects/proyects";
 export default function ProyectosPage() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const columns = useMemo<ColumnDef<ColApiProyecto | ColApiAporte>[]>(
+  const columns = useMemo<ColumnDef<columnType>[]>(
     () => [
       {
         header: "ID",
