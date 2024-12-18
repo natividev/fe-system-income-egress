@@ -34,24 +34,32 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const getDataIngresoEgreso = async () => {
-      const { data } = await axiosInstance.get("/dashboard/ingreso-egreso");
-      if (!data) return;
-      const { ingreso, egreso } = data;
+      try {
+        const { data } = await axiosInstance.get("/dashboard/ingreso-egreso");
+        if (!data) return;
+        const { ingreso, egreso } = data;
 
-      const ingesos = formatearData(ingreso);
-      const egresos = formatearData(egreso);
+        const ingesos = formatearData(ingreso);
+        const egresos = formatearData(egreso);
 
-      setIngresos(ingesos);
-      setEgresos(egresos);
+        setIngresos(ingesos);
+        setEgresos(egresos);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     const getData = async () => {
-      const { data } = await axiosInstance.get(
-        "/dashboard/ingreso-grafica-linea"
-      );
-      if (!data) return;
-      const dataChart = formatearData(data);
-      setData(dataChart);
+      try {
+        const { data } = await axiosInstance.get(
+          "/dashboard/ingreso-grafica-linea"
+        );
+        if (!data) return;
+        const dataChart = formatearData(data);
+        setData(dataChart);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getDataIngresoEgreso();
     getData();
