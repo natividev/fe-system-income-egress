@@ -23,7 +23,8 @@ const handler = NextAuth({
           );
 
           if (!data) return null;
-          return { ...data.user, accessToken: data.access_token };
+
+          return data;
         } catch (error) {
           console.error("Error en la autenticación:", { authorize: error });
         }
@@ -40,11 +41,26 @@ const handler = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token = { accessToken: user.accessToken };
+      console.log({ token, user });
+
+      if (user) {
+        token = {
+          ...token,
+          name: user.name,
+          accessToken: user.accessToken,
+        };
+      }
+
       return token;
     },
     async session({ session, token }) {
+      console.log({ session, token });
+
       if (token?.accessToken) {
+        session.user = {
+          ...session.user,
+          name: token.name,
+        };
         session.accessToken = token.accessToken?.toString();
       }
       return session;

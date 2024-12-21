@@ -17,8 +17,6 @@ axiosInstance.interceptors.request.use(
     const session = await getSession();
 
     if (session && session?.accessToken) {
-      console.log("axios XD");
-
       config.headers.Authorization = `Bearer ${session.accessToken}`;
     }
     config.showSuccess = true;

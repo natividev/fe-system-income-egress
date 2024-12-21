@@ -57,7 +57,6 @@ export const SelectController = <T extends FieldValues>({
         }
         return element.label === dataFilters || element.value === dataFilters;
       });
-      console.log(dataFilter);
 
       if (dataFilter) setValue(name, dataFilter);
     } catch (error) {
