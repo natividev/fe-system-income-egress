@@ -2,6 +2,8 @@
 import axiosInstance from "@/api/axiosInstance";
 import BaselineChart from "@/components/ui/BaselineChart/BaselineChart";
 import { Chart } from "@/components/ui/Chart/Chart";
+import { Indicador } from "@/components/ui/Indicator/Indicator";
+import { ITotalesGlobalesIngresoEgreso } from "@/interface/interfaces";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -19,6 +21,7 @@ export default function DashboardPage() {
   const [ingresos, setIngresos] = useState<dataGraficos[] | []>([]);
   const [egresos, setEgresos] = useState<dataGraficos[] | []>([]);
   const [data, setData] = useState<dataGraficos[] | []>([]);
+  const [totalGlobales, setTotalGlobales] = useState<ITotalesGlobalesIngresoEgreso | null>(null);
 
   const formatearData = (data: DataResult[]) => {
     if (!Array.isArray(data)) return data;
@@ -61,8 +64,20 @@ export default function DashboardPage() {
         console.log(error);
       }
     };
+
+    const getTotalGlobales = async () => {
+      try {
+        const { data } = await axiosInstance.get("/dashboard/total-globales");
+        if (!data) return;
+        setTotalGlobales(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    
     getDataIngresoEgreso();
     getData();
+    getTotalGlobales();
   }, []);
 
   return (
@@ -78,6 +93,12 @@ export default function DashboardPage() {
       <Text fontSize={"xl"} as="b">
         DASHBOARD
       </Text>
+
+      <Flex direction={"column"} mt={"3rem"} mb={"1rem"} align={"center"}>
+        <Indicador totalGlobalIngresoEgreso={totalGlobales } />
+      </Flex>
+
+
       <Flex direction={"column"} mt={"3rem"} mb={"1rem"}>
         <Text fontSize={"md"} as={"b"}>
           GRÁFICA TRANSACCIONES

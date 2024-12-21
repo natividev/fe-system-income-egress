@@ -228,3 +228,12 @@ export interface FormCrearUser {
   usuario: string;
   password: string;
 }
+
+export interface ITotalesGlobalesIngresoEgreso {
+  ingreso: Monto;
+  egreso:  Monto;
+}
+
+export interface Monto {
+  monto: number;
+}
