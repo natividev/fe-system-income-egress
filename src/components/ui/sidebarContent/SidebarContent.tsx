@@ -11,8 +11,8 @@ import { NavItem } from "../navItem/NavItem";
 import { NavItems } from "@/interface/interfaces";
 import { Dashboard } from "@/icons/dashboard";
 import { Reportes } from "@/icons/reportes";
-import { General } from "@/icons/general";
 import { PerfilUser } from "../Menu/Menu";
+import { General } from "@/icons/general";
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
@@ -59,6 +59,7 @@ const LinkItems: Array<NavItems> = [
       },
     ],
   },
+  { label: "Crear Usuarios", url: "/system/crear-user", icon: General },
 ];
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {

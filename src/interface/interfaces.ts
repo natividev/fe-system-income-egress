@@ -222,3 +222,9 @@ export interface FormInputLogin {
   usuario: string;
   password: string;
 }
+
+export interface FormCrearUser {
+  nombre: string;
+  usuario: string;
+  password: string;
+}
