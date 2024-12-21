@@ -23,21 +23,21 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<NavItems> = [
-  { label: "Dashboard", url: "/dashboard", icon: Dashboard },
-  { label: "Proyectos", url: "/proyectos", icon: General },
-  { label: "Bitacora Proyectos", url: "/bitacora", icon: General },
-  { label: "Afiliados", url: "/afiliados", icon: General },
+  { label: "Dashboard", url: "/system/dashboard", icon: Dashboard },
+  { label: "Proyectos", url: "/system/proyectos", icon: General },
+  { label: "Bitacora Proyectos", url: "/system/bitacora", icon: General },
+  { label: "Afiliados", url: "/system/afiliados", icon: General },
   {
     label: "Ingreso/Egreso",
     icon: Dashboard,
     children: [
       {
         label: "Ingreso",
-        href: "/ingreso",
+        href: "/system/ingreso",
       },
       {
         label: "Egreso",
-        href: "/egreso",
+        href: "/system/egreso",
       },
     ],
   },
@@ -47,20 +47,20 @@ const LinkItems: Array<NavItems> = [
     children: [
       {
         label: "Reporte de ingreso",
-        href: "/reporte-ingreso",
+        href: "/system/reporte-ingreso",
       },
       {
         label: "Reporte de egreso",
-        href: "/reporte-egreso",
+        href: "/system/reporte-egreso",
       },
       {
         label: "Reporte general",
-        href: "/reporte-general",
+        href: "/system/reporte-general",
       },
       {
         label: "Aportaciones por proyecto",
-        href: "/reporte-aportaciones",
-      }
+        href: "/system/reporte-aportaciones",
+      },
     ],
   },
 ];

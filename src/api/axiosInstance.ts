@@ -1,5 +1,6 @@
 import { CustomAxiosRequestConfig } from "@/interface/interfaces";
-import { showAlertError, showAlertSuccess } from "@/util/Alerts/Alerts";
+import { showAlertError, showAlertSuccess } from "@/utils/Alerts/Alerts";
+import { getSession } from "next-auth/react";
 import axios from "axios";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -12,9 +13,16 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  (config: CustomAxiosRequestConfig) => {
+  async (config: CustomAxiosRequestConfig) => {
+    const session = await getSession();
+
+    if (session && session?.accessToken) {
+      console.log("axios XD");
+
+      config.headers.Authorization = `Bearer ${session.accessToken}`;
+    }
     config.showSuccess = true;
-    config.showAlerts = true;
+
     return config;
   },
   (error) => {

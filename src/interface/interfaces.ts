@@ -217,3 +217,8 @@ export interface ColApiAporte {
 }
 
 export type columnType = ColApiProyecto | ColApiAporte | ColApiEgreso;
+
+export interface FormInputLogin {
+  usuario: string;
+  password: string;
+}

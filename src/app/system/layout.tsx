@@ -1,5 +1,6 @@
+import SidebarWithHeader from "@/components/ui/Sidebar/Sidebar";
 import type { Metadata } from "next";
-import { Providers } from "./providers";
+import { Providers } from "../providers";
 
 export const metadata: Metadata = {
   title: "SYSTEM INCOME EGRESS",
@@ -13,10 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body
-        style={{ backgroundColor: "rgba(36, 34, 32, 0.08)", height: "96vh" }}
-      >
-        <Providers>{children}</Providers>
+      <body>
+        <Providers>
+          <SidebarWithHeader>{children}</SidebarWithHeader>
+        </Providers>
       </body>
     </html>
   );
