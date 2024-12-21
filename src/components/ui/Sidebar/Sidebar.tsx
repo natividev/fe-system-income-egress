@@ -8,9 +8,11 @@ import {
   DrawerContent,
   useDisclosure,
   FlexProps,
+  HStack,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 import { SidebarContent } from "../sidebarContent/SidebarContent";
+import { BtnCerrarSession } from "../BtnCerrarSession/BtnCerrarSession";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -36,6 +38,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
+
+      <HStack spacing={{ base: "0", md: "6" }}>
+        <BtnCerrarSession />
+      </HStack>
     </Flex>
   );
 };

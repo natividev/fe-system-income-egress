@@ -12,7 +12,7 @@ const handler = NextAuth({
         usuario: { label: "Usuario", type: "text" },
         password: { label: "Contraseña", type: "password" },
       },
-      async authorize(credentials: Record<"usuario" | "password", string>) {
+      async authorize(credentials) {
         try {
           const { data } = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
@@ -23,8 +23,7 @@ const handler = NextAuth({
           );
 
           if (!data) return null;
-
-          return { accessToken: data.access_token };
+          return { ...data.user, accessToken: data.access_token };
         } catch (error) {
           console.error("Error en la autenticación:", { authorize: error });
         }
@@ -33,9 +32,11 @@ const handler = NextAuth({
   ],
   pages: {
     signIn: "/auth/signin", // Página de inicio de sesión
+    signOut: "/auth/signin", // Página de cierre de sesión
   },
   session: {
-    strategy: "jwt", // Utilizar JWT para manejar la sesión
+    strategy: "jwt",
+    maxAge: 24 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -43,11 +44,9 @@ const handler = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      console.log("..............session..............", { session, token });
-
-      session.accessToken = token.accessToken?.toString();
-
-      console.log("..............session update..............", { session });
+      if (token?.accessToken) {
+        session.accessToken = token.accessToken?.toString();
+      }
       return session;
     },
     async redirect({ url, baseUrl }) {

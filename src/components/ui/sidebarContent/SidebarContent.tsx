@@ -16,7 +16,6 @@ import { NavItems } from "@/interface/interfaces";
 import { Dashboard } from "@/icons/dashboard";
 import { Reportes } from "@/icons/reportes";
 import { General } from "@/icons/general";
-//import { FaRegUser } from "react-icons/fa";
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
@@ -102,8 +101,10 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             </VStack>
           </HStack>
         </Flex>
+
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
+
       <Stack bg={useColorModeValue("white", "gray.800")} p={4}>
         {LinkItems.map((navItem) => (
           <NavItem key={navItem.label} {...navItem} />
