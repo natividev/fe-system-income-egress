@@ -54,7 +54,7 @@ const LinkItems: Array<NavItems> = [
         href: "/system/reporte-general",
       },
       {
-        label: "Aportaciones por proyecto",
+        label: "Aportaciones por proyectosssssss",
         href: "/system/reporte-aportaciones",
       },
     ],

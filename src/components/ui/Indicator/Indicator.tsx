@@ -12,12 +12,12 @@ export const Indicador: React.FC<IndicadorProps> = ( { totalGlobalIngresoEgreso 
         <StatGroup style={{ position: "relative", width: "100%", height: "300px" }}>
           <Stat>
             <StatLabel>Ingreso</StatLabel>
-            <StatNumber>{totalGlobalIngresoEgreso?.ingreso.monto}</StatNumber>
+            <StatNumber>{totalGlobalIngresoEgreso?.ingreso?.monto}</StatNumber>
           </Stat>
 
           <Stat>
             <StatLabel>Egreso</StatLabel>
-            <StatNumber>{totalGlobalIngresoEgreso?.egreso.monto}</StatNumber>
+            <StatNumber>{totalGlobalIngresoEgreso?.egreso?.monto}</StatNumber>
           </Stat>
         </StatGroup>
     
