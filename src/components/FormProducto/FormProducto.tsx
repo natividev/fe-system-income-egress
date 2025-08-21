@@ -105,7 +105,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
                 <GridItem colSpan={COLSPAN}>
                   <FormControl id="firstName" isRequired>
                     <SelectController
-                      label={"Tipo Documento:"}
+                      label={"Categoria:"}
                       endpoint="/generales/categorias"   
                       disabledInput={isLoadig}
                       name="id_categoria"
@@ -114,7 +114,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
                       setValue={setValue}
                       watch={watch}
                       rules={{
-                        required: "Por favor ingrese el tipo documento",
+                        required: "Por favor ingrese el tipo Categoria",
                       }}
                     />
                   </FormControl>
