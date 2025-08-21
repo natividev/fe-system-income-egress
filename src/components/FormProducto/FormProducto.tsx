@@ -10,14 +10,15 @@ import { FormInputsProducto, ResultApiProducto } from "@/interface/inventory";
 const COLSPAN = { sm: 1, md: 2, lg: 1 };
 
 interface Props {
-  onSubmit: (data: FormInputsProducto) => Promise<ResultApiProducto>;
-  isLoadig: boolean;
+onSubmit: (data: FormInputsProducto) => Promise<ResultApiProducto>;
+  isLoading: boolean;
   title: string;
+  initialValues?: Partial<FormInputsProducto>;
 }
 
-export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
-  const { control, handleSubmit, setValue, watch, onSubmitWithReset } =
-    useFormProducto(onSubmit);
+export default function FormProducto({  onSubmit, isLoading, title, initialValues }: Props) {
+ const { control, handleSubmit, setValue, watch, onSubmitWithReset } =
+    useFormProducto(onSubmit, initialValues);
 
   return (
     <Box p={5} bg="white" minHeight="83vh" width="100%" borderRadius="lg">
@@ -28,7 +29,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
           <FormControl isRequired>
             <InputController
               label="Nombre:"
-              disabledInput={isLoadig}
+              disabledInput={isLoading}
               name="nombre"
               type="text"
               placeholder=""
@@ -43,7 +44,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
           <FormControl>
             <InputController
               label="Código de barra:"
-              disabledInput={isLoadig}
+              disabledInput={isLoading}
               name="codigo_barra"
               type="text"
               placeholder=""
@@ -58,7 +59,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
           <FormControl isRequired>
             <InputController
               label="Precio unitario:"
-              disabledInput={isLoadig}
+              disabledInput={isLoading}
               name="precio_unitario"
               type="number"
               placeholder=""
@@ -73,7 +74,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
           <FormControl>
             <InputController
               label="Stock inicial:"
-              disabledInput={isLoadig}
+              disabledInput={isLoading}
               name="stock_actual"
               type="number"
               placeholder=""
@@ -90,7 +91,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
                       <SelectController
                         label="Unidad de medida:"
                         endpoint="/generales/unidades-medida" 
-                        disabledInput={isLoadig}
+                        disabledInput={isLoading}
                         name="id_unidad_medida"
                         placeholder=""
                         control={control}
@@ -107,7 +108,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
                     <SelectController
                       label={"Categoria:"}
                       endpoint="/generales/categorias"   
-                      disabledInput={isLoadig}
+                      disabledInput={isLoading}
                       name="id_categoria"
                       placeholder=""
                       control={control}
@@ -125,7 +126,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
           <FormControl>
             <TextAreaController
               label="Descripción:"
-              disabledInput={isLoadig}
+              disabledInput={isLoading}
               name="descripcion"
               type="text"
               placeholder=""
@@ -140,7 +141,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
           <HStack>
             <Text as="b">Activo:</Text>
             <Switch
-              isDisabled={isLoadig}
+              isDisabled={isLoading}
               defaultChecked
               onChange={(e) => setValue("activo", e.target.checked)}
             />
@@ -150,7 +151,7 @@ export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
 
       <BtnLoading
         onSubmit={handleSubmit(onSubmitWithReset)}
-        isLoading={isLoadig}
+        isLoading={isLoading}
         text="Guardar"
         textLoading="Guardando"
       />
