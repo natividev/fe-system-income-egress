@@ -83,17 +83,36 @@ export default function StatCard({
             <Skeleton height="32px" width="180px" borderRadius="md" />
           ) : (
             <Text fontSize="3xl" fontWeight="extrabold" lineHeight="1.1">
-              {typeof value === "number" ? (
-                isCurrency ? (
-                  <>{formatCurrency(value)}</>
-                ) : (
-                  <CountUp end={value} duration={0.6} separator="," />
-                )
-              ) : (
+            {isLoading ? (
+                <Skeleton height="32px" width="180px" borderRadius="md" />
+            ) : typeof value === "number" ? (
+                <CountUp
+                key={`${title}-${value}-${isCurrency}`} 
+                start={0}
+                end={value}
+                duration={0.8}
+                separator=","
+                decimals={isCurrency ? 2 : 0}
+                preserveValue={false}
+                formattingFn={
+                    isCurrency
+                    ? (n: number) =>
+                        n.toLocaleString("es-SV", {
+                            style: "currency",
+                            currency: "USD",
+                            maximumFractionDigits: 2,
+                        })
+                    : undefined
+                }
+                />
+            ) : (
                 "--"
-              )}
-              {!isCurrency && suffix ? <Text as="span" fontSize="xl" color="gray.500"> {suffix}</Text> : null}
+            )}
+            {!isCurrency && typeof value === "number" ? (
+                <Text as="span" fontSize="xl" color="gray.500"> {suffix}</Text>
+            ) : null}
             </Text>
+
           )}
 
           {trend && (
