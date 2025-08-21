@@ -13,7 +13,7 @@ export const InventarioMovimientosView = () => {
       cantidad: Number(data.cantidad),
       referencia: data.referencia || null,
       observacion: data.observacion || null,
-      id_producto: data.id_producto?.value,
+      id: data.id?.value,
       id_usuario: Number(data.id_usuario), // o toma del contexto auth
     };
   };

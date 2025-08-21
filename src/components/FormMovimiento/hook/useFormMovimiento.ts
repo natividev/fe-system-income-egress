@@ -11,7 +11,7 @@ export const useFormMovimiento = (
         cantidad: undefined as unknown as number,
         referencia: "",
         observacion: "",
-        id_producto: null,    // { label, value }
+        id: null,    // { label, value }
         id_usuario: undefined as unknown as number,
       },
     });

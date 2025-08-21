@@ -12,7 +12,7 @@ export interface FormInputsProducto {
 }
 
 export interface ResultApiProducto {
-  id_producto: number;
+  id: number;
   // ...otros campos que responda tu API
 }
 
@@ -21,8 +21,8 @@ export interface FormInputsMovimiento {
   cantidad: number;
   referencia?: string;
   observacion?: string;
-  id_producto: Option | null; // value: id_producto
-  id_usuario: number;         // o derivado de auth
+  id: Option | null;
+  id_usuario: number;         
 }
 
 export interface ResultApiMovimiento {

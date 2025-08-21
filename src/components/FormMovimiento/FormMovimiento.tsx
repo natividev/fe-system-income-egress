@@ -79,9 +79,9 @@ export default function FormMovimiento({ onSubmit, isLoading, title }: Props) {
           <FormControl isRequired>
             <SelectController
               label="Producto:"
-              endpoint="/inventory/productos?limit=50" // AJUSTA: tu SelectController debe mapear {label: nombre, value: id_producto}
+              endpoint="/inventory/productos-lista" // AJUSTA: tu SelectController debe mapear {label: nombre, value: id}
               disabledInput={isLoading}
-              name="id_producto"
+              name="id"
               placeholder=""
               control={control}
               setValue={setValue}
