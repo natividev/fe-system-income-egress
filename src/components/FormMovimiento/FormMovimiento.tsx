@@ -13,14 +13,14 @@ interface Props {
   onSubmit: (data: FormInputsMovimiento) => Promise<ResultApiMovimiento>;
   isLoading: boolean;
   title: string;
+  initialValues?: Partial<FormInputsMovimiento>;   // 👈
 }
 
-const MOV_TIPO_OPTIONS_ENDPOINT = "/generales/tipo-movimiento"; // si haces catálogo
-// O usa un arreglo local si no tienes endpoint y tu SelectController lo acepta
+const MOV_TIPO_OPTIONS_ENDPOINT = "/generales/tipo-movimiento";
 
-export default function FormMovimiento({ onSubmit, isLoading, title }: Props) {
+export default function FormMovimiento({ onSubmit, isLoading, title, initialValues }: Props) {
   const { control, handleSubmit, setValue, watch, onSubmitWithReset } =
-    useFormMovimiento(onSubmit);
+    useFormMovimiento(onSubmit, initialValues);     // 👈
 
   return (
     <Box p={5} bg="white" minHeight="83vh" width="100%" borderRadius="lg">
@@ -28,11 +28,9 @@ export default function FormMovimiento({ onSubmit, isLoading, title }: Props) {
 
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 2 }} spacing={4} mb={5}>
         <GridItem colSpan={COLSPAN}>
-          <FormControl isRequired>
+          <FormControl id="tipo" isRequired>
             <SelectController
               label="Tipo de movimiento:"
-              // Si tu SelectController soporta opciones locales, pásale options=[{label,value},...]
-              // Si no, expón un endpoint que devuelva entrada/salida/ajuste
               endpoint={MOV_TIPO_OPTIONS_ENDPOINT}
               disabledInput={isLoading}
               name="tipo"
@@ -46,7 +44,7 @@ export default function FormMovimiento({ onSubmit, isLoading, title }: Props) {
         </GridItem>
 
         <GridItem colSpan={COLSPAN}>
-          <FormControl isRequired>
+          <FormControl id="cantidad" isRequired>
             <InputController
               label="Cantidad:"
               disabledInput={isLoading}
@@ -61,7 +59,7 @@ export default function FormMovimiento({ onSubmit, isLoading, title }: Props) {
         </GridItem>
 
         <GridItem colSpan={COLSPAN}>
-          <FormControl>
+          <FormControl id="referencia">
             <InputController
               label="Referencia:"
               disabledInput={isLoading}
@@ -76,12 +74,12 @@ export default function FormMovimiento({ onSubmit, isLoading, title }: Props) {
         </GridItem>
 
         <GridItem colSpan={COLSPAN}>
-          <FormControl isRequired>
+          <FormControl id="id_producto" isRequired>
             <SelectController
               label="Producto:"
-              endpoint="/inventory/productos-lista" // AJUSTA: tu SelectController debe mapear {label: nombre, value: id}
+              endpoint=""
               disabledInput={isLoading}
-              name="id"
+              name="id" 
               placeholder=""
               control={control}
               setValue={setValue}
@@ -92,7 +90,7 @@ export default function FormMovimiento({ onSubmit, isLoading, title }: Props) {
         </GridItem>
 
         <GridItem colSpan={COLSPAN}>
-          <FormControl isRequired>
+          <FormControl id="id_usuario" isRequired>
             <InputController
               label="ID Usuario (ejecutor):"
               disabledInput={isLoading}
@@ -107,7 +105,7 @@ export default function FormMovimiento({ onSubmit, isLoading, title }: Props) {
         </GridItem>
 
         <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
-          <FormControl>
+          <FormControl id="observacion">
             <TextAreaController
               label="Observación:"
               disabledInput={isLoading}

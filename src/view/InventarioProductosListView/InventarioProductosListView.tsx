@@ -9,9 +9,9 @@ import Link from "next/link";
 
 const fetcher = (url: string) => axiosInstance.get(url).then(r => r.data);
 
-export const InventarioProductosListView = () => {
+export default function InventarioProductosListView() {  // 👈 sin props
   const [q, setQ] = useState("");
-  const [activo, setActivo] = useState<string>("todos"); // todos | true | false
+  const [activo, setActivo] = useState<string>("todos");
   const [offset, setOffset] = useState(0);
   const limit = 10;
 
@@ -28,8 +28,8 @@ export const InventarioProductosListView = () => {
   const total: number = data?.total ?? 0;
   const items: any[] = data?.items ?? [];
 
-  const desactivar = async (id_producto: number) => {
-    await axiosInstance.patch(`/inventory/productos/${id_producto}/desactivar`);
+  const desactivar = async (id: number) => {
+    await axiosInstance.patch(`/inventory/productos/${id}/desactivar`);
     await mutate();
   };
 
@@ -90,16 +90,15 @@ export const InventarioProductosListView = () => {
                         <Button size="xs" colorScheme="yellow">Editar</Button>
                       </Link>
                       {p.activo && (
-                        <Button
-                          size="xs"
-                          colorScheme="red"
-                          onClick={() => desactivar(p.id)}
-                        >
+                        <Button size="xs" colorScheme="red" onClick={() => desactivar(p.id)}>
                           Desactivar
                         </Button>
                       )}
                       <Link href={`/system/inventario/movimientos/listado?producto=${p.id}`}>
-                        <Button size="xs" colorScheme="purple">Movimientos</Button>
+                        <Button size="xs" colorScheme="purple" variant="outline">Movimientos</Button>
+                      </Link>
+                      <Link href={`/system/inventario/movimientos?producto=${p.id}`}>
+                        <Button size="xs" colorScheme="purple">Registrar mov.</Button>
                       </Link>
                     </HStack>
                   </Td>
@@ -111,18 +110,10 @@ export const InventarioProductosListView = () => {
           <Flex justify="space-between" mt={4}>
             <Text>Total: {total}</Text>
             <HStack>
-              <Button
-                size="sm"
-                onClick={() => setOffset(Math.max(0, offset - limit))}
-                isDisabled={offset === 0}
-              >
+              <Button size="sm" onClick={() => setOffset(Math.max(0, offset - limit))} isDisabled={offset === 0}>
                 Anterior
               </Button>
-              <Button
-                size="sm"
-                onClick={() => setOffset(offset + limit)}
-                isDisabled={offset + limit >= total}
-              >
+              <Button size="sm" onClick={() => setOffset(offset + limit)} isDisabled={offset + limit >= total}>
                 Siguiente
               </Button>
             </HStack>
@@ -131,4 +122,4 @@ export const InventarioProductosListView = () => {
       )}
     </Box>
   );
-};
+}

@@ -31,10 +31,6 @@ const LinkItems: Array<NavItems> = [
       label: "Productos",
       href: "/system/inventario/productos/listado", // -> muestra InventarioProductosListView
     },
-    {
-      label: "Movimientos",
-      href: "/system/inventario/movimientos", // -> muestra InventarioMovimientosListView
-    },
       // Opcional: catálogos
       // { label: "Categorías", href: "/system/inventario/categorias" },
       // { label: "Unidades de medida", href: "/system/inventario/unidades-medida" },
