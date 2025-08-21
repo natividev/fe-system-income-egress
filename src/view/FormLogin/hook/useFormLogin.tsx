@@ -10,10 +10,17 @@ export const useFormLogin = () => {
   const router = useRouter();
   const [isLoadig, setIsLoadin] = useState(false);
 
-  const { control, handleSubmit, watch } = useForm<FormInputLogin>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,         
+    formState: { isSubmitting },
+  } = useForm<FormInputLogin>({
     defaultValues: {
       usuario: "",
       password: "",
+      remember: true, 
     },
   });
 
@@ -37,7 +44,8 @@ export const useFormLogin = () => {
     control,
     handleSubmit,
     watch,
+    setValue,
     onSubmit,
-    isLoadig,
+    isLoadig: isSubmitting,
   };
 };

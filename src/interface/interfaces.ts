@@ -221,6 +221,7 @@ export type columnType = ColApiProyecto | ColApiAporte | ColApiEgreso;
 export interface FormInputLogin {
   usuario: string;
   password: string;
+  remember?: boolean;
 }
 
 export interface FormCrearUser {
