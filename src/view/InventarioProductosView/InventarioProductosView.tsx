@@ -15,8 +15,8 @@ export const InventarioProductosView = () => {
       precio_unitario: Number(data.precio_unitario),
       stock_actual: Number(data.stock_actual ?? 0),
       activo: data.activo ?? true,
-      id_categoria: data.id_categoria?.value,
-      id_unidad_medida: data.id_unidad_medida?.value,
+      id_categoria: data.id_categoria?.value != null ? Number(data.id_categoria.value) : undefined,
+      id_unidad_medida: data.id_unidad_medida?.value != null ? Number(data.id_unidad_medida.value) : undefined,
     };
   };
 
@@ -34,7 +34,7 @@ export const InventarioProductosView = () => {
   return (
     <FormProducto
       onSubmit={onSubmit}
-      isLoading={isLoading}
+      isLoadig={isLoading}
       title="Crear Producto"
     />
   );

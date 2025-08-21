@@ -24,6 +24,17 @@ const LinkItems: Array<NavItems> = [
   { label: "Bitacora Proyectos", url: "/system/bitacora", icon: General },
   { label: "Afiliados", url: "/system/afiliados", icon: General },
   {
+    label: "Inventario",
+    icon: General, // puedes cambiar a un ícono específico si lo tienes
+    children: [
+      { label: "Productos", href: "/system/inventario/productos" },
+      { label: "Movimientos", href: "/system/inventario/movimientos" },
+      // Opcional: catálogos
+      // { label: "Categorías", href: "/system/inventario/categorias" },
+      // { label: "Unidades de medida", href: "/system/inventario/unidades-medida" },
+    ],
+  },
+  {
     label: "Ingreso/Egreso",
     icon: Dashboard,
     children: [
@@ -54,7 +65,7 @@ const LinkItems: Array<NavItems> = [
         href: "/system/reporte-general",
       },
       {
-        label: "Aportaciones por proyectosssssss",
+        label: "Aportaciones por proyectos",
         href: "/system/reporte-aportaciones",
       },
     ],

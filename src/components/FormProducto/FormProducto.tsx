@@ -11,11 +11,11 @@ const COLSPAN = { sm: 1, md: 2, lg: 1 };
 
 interface Props {
   onSubmit: (data: FormInputsProducto) => Promise<ResultApiProducto>;
-  isLoading: boolean;
+  isLoadig: boolean;
   title: string;
 }
 
-export default function FormProducto({ onSubmit, isLoading, title }: Props) {
+export default function FormProducto({ onSubmit, isLoadig, title }: Props) {
   const { control, handleSubmit, setValue, watch, onSubmitWithReset } =
     useFormProducto(onSubmit);
 
@@ -28,7 +28,7 @@ export default function FormProducto({ onSubmit, isLoading, title }: Props) {
           <FormControl isRequired>
             <InputController
               label="Nombre:"
-              disabledInput={isLoading}
+              disabledInput={isLoadig}
               name="nombre"
               type="text"
               placeholder=""
@@ -43,7 +43,7 @@ export default function FormProducto({ onSubmit, isLoading, title }: Props) {
           <FormControl>
             <InputController
               label="Código de barra:"
-              disabledInput={isLoading}
+              disabledInput={isLoadig}
               name="codigo_barra"
               type="text"
               placeholder=""
@@ -58,7 +58,7 @@ export default function FormProducto({ onSubmit, isLoading, title }: Props) {
           <FormControl isRequired>
             <InputController
               label="Precio unitario:"
-              disabledInput={isLoading}
+              disabledInput={isLoadig}
               name="precio_unitario"
               type="number"
               placeholder=""
@@ -73,7 +73,7 @@ export default function FormProducto({ onSubmit, isLoading, title }: Props) {
           <FormControl>
             <InputController
               label="Stock inicial:"
-              disabledInput={isLoading}
+              disabledInput={isLoadig}
               name="stock_actual"
               type="number"
               placeholder=""
@@ -84,43 +84,48 @@ export default function FormProducto({ onSubmit, isLoading, title }: Props) {
           </FormControl>
         </GridItem>
 
-        <GridItem colSpan={COLSPAN}>
-          <FormControl isRequired>
-            <SelectController
-              label="Categoría:"
-              endpoint="/categorias"              // AJUSTA A TU API
-              disabledInput={isLoading}
-              name="id_categoria"
-              placeholder=""
-              control={control}
-              setValue={setValue}
-              watch={watch}
-              rules={{ required: "Seleccione la categoría" }}
-            />
-          </FormControl>
-        </GridItem>
+        
+                  <GridItem colSpan={COLSPAN}>
+                    <FormControl id="firstName" isRequired>
+                      <SelectController
+                        label="Unidad de medida:"
+                        endpoint="/generales/unidades-medida" 
+                        disabledInput={isLoadig}
+                        name="id_unidad_medida"
+                        placeholder=""
+                        control={control}
+                        setValue={setValue}
+                        watch={watch}
+                        rules={{
+                          required: "Por favor ingrese el tipo documento",
+                        }}
+                      />
+                    </FormControl>
+                  </GridItem>
+                <GridItem colSpan={COLSPAN}>
+                  <FormControl id="firstName" isRequired>
+                    <SelectController
+                      label={"Tipo Documento:"}
+                      endpoint="/generales/categorias"   
+                      disabledInput={isLoadig}
+                      name="id_categoria"
+                      placeholder=""
+                      control={control}
+                      setValue={setValue}
+                      watch={watch}
+                      rules={{
+                        required: "Por favor ingrese el tipo documento",
+                      }}
+                    />
+                  </FormControl>
+                </GridItem>
 
-        <GridItem colSpan={COLSPAN}>
-          <FormControl isRequired>
-            <SelectController
-              label="Unidad de medida:"
-              endpoint="/unidades-medida"        // AJUSTA A TU API
-              disabledInput={isLoading}
-              name="id_unidad_medida"
-              placeholder=""
-              control={control}
-              setValue={setValue}
-              watch={watch}
-              rules={{ required: "Seleccione unidad de medida" }}
-            />
-          </FormControl>
-        </GridItem>
 
         <GridItem colSpan={{ sm: 1, md: 2, lg: 2 }}>
           <FormControl>
             <TextAreaController
               label="Descripción:"
-              disabledInput={isLoading}
+              disabledInput={isLoadig}
               name="descripcion"
               type="text"
               placeholder=""
@@ -135,7 +140,7 @@ export default function FormProducto({ onSubmit, isLoading, title }: Props) {
           <HStack>
             <Text as="b">Activo:</Text>
             <Switch
-              isDisabled={isLoading}
+              isDisabled={isLoadig}
               defaultChecked
               onChange={(e) => setValue("activo", e.target.checked)}
             />
@@ -145,7 +150,7 @@ export default function FormProducto({ onSubmit, isLoading, title }: Props) {
 
       <BtnLoading
         onSubmit={handleSubmit(onSubmitWithReset)}
-        isLoading={isLoading}
+        isLoading={isLoadig}
         text="Guardar"
         textLoading="Guardando"
       />
